@@ -1,8 +1,4 @@
-const {
-  responseConstant,
-  statusCodeConstant,
-  serverConstant,
-} = require("../../constants");
+const { responseConstant, statusCodeConstant } = require("../../constants");
 const { logger } = require("../../utils");
 const { responseBuilder } = require("../../utils/responseBuilder");
 const {
