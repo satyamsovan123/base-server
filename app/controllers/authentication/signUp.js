@@ -6,8 +6,7 @@ const {
   serverConstant,
 } = require("../../../constants");
 const { User } = require("../../models");
-const { generateJWT } = require("./utils/authenticationHelper");
-const { excryptPlainText } = require("../../../utils");
+const { excryptPlainText, generateJWT } = require("../../../utils");
 
 const signUp = async (req, res) => {
   try {

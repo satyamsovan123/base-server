@@ -1,5 +1,11 @@
 const { logger } = require("./logger");
 const { overengineedBoxifier } = require("./overengineedBoxifier");
+const { generateJWT } = require("./authenticationHelper");
+const {
+  checkExistingData,
+  checkExistingUser,
+} = require("./checkExistingDataInDatabase");
+
 const {
   compareEncryptedText,
   excryptPlainText,
@@ -10,4 +16,7 @@ module.exports = {
   overengineedBoxifier,
   compareEncryptedText,
   excryptPlainText,
+  generateJWT,
+  checkExistingData,
+  checkExistingUser,
 };

@@ -1,14 +1,11 @@
 const { responseConstant, statusCodeConstant } = require("../../constants");
-const { logger } = require("../../utils");
+const { logger, checkExistingUser } = require("../../utils");
 const { responseBuilder } = require("../../utils/responseBuilder");
 const jwt = require("jsonwebtoken");
-const {
-  checkExistingUser,
-} = require("../controllers/authentication/utils/authenticationHelper");
 
 const verifyJWT = async (req, res, next) => {
   try {
-    logger("Inside JWT");
+    logger("Inside JWT verificatfion");
     const token = req.headers?.authorization?.split(" ")[1];
     const decodedData = jwt.verify(token, appConfig.jwtSecret);
     const existingUser = await checkExistingUser(decodedData?.email);

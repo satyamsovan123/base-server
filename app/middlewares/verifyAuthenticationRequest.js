@@ -1,9 +1,6 @@
 const { responseConstant, statusCodeConstant } = require("../../constants");
-const { logger } = require("../../utils");
+const { logger, checkExistingUser } = require("../../utils");
 const { responseBuilder } = require("../../utils/responseBuilder");
-const {
-  checkExistingUser,
-} = require("../controllers/authentication/utils/authenticationHelper");
 const { AuthenticationValidator } = require("../validators");
 
 const verifyAuthenticationDataRequest = async (req, res, next) => {

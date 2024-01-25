@@ -6,8 +6,7 @@ const {
   serverConstant,
 } = require("../../../constants");
 
-const { generateJWT } = require("./utils/authenticationHelper");
-const { compareEncryptedText } = require("../../../utils");
+const { compareEncryptedText, generateJWT } = require("../../../utils");
 
 const signIn = async (req, res) => {
   try {

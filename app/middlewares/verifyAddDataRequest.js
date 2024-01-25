@@ -1,9 +1,7 @@
 const { responseConstant, statusCodeConstant } = require("../../constants");
 const { logger } = require("../../utils");
 const { responseBuilder } = require("../../utils/responseBuilder");
-const {
-  checkExistingData,
-} = require("../controllers/data/utils/dataManipulationHelper");
+const { checkExistingData } = require("../../utils");
 const { AddDataValidator } = require("../validators");
 
 const verifyAddDataRequest = async (req, res, next) => {
