@@ -13,9 +13,10 @@ const checkExistingData = async (title, email) => {
       cursorData = result;
     })
     .catch((error) => {
-      logger(error);
+      logger(["Error while checking existing data", error]);
       cursorData = null;
     });
+  logger(["Existing data", cursorData]);
   return cursorData;
 };
 
@@ -30,9 +31,11 @@ const checkExistingUser = async (email) => {
       cursorData = result;
     })
     .catch((error) => {
-      logger(error);
+      logger(["Error while checking existing user", error]);
       cursorData = null;
     });
+  logger(["UTIL: Existing user", cursorData]);
+
   return cursorData;
 };
 

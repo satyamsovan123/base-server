@@ -5,6 +5,7 @@ const { Data } = require("../../models");
 
 const updateData = async (req, res) => {
   try {
+    logger(["CONTROLLER: Inside update data"]);
     const userData = req.body;
 
     const updatedData = await Data.findByIdAndUpdate(userData.id, userData, {
@@ -17,6 +18,7 @@ const updateData = async (req, res) => {
         responseConstant.UPDATE_DATA_ERROR,
         statusCodeConstant.NOT_FOUND
       );
+      logger(["CONTROLLER: No data found"]);
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
@@ -25,6 +27,7 @@ const updateData = async (req, res) => {
       responseConstant.UPDATE_DATA_SUCCESS,
       statusCodeConstant.SUCCESS
     );
+    logger(["CONTROLLER: Data updated successfully", updatedData]);
     return res.status(generatedResponse.code).send(generatedResponse);
   } catch (error) {
     const generatedResponse = responseBuilder(
@@ -32,7 +35,7 @@ const updateData = async (req, res) => {
       responseConstant.UPDATE_DATA_ERROR,
       statusCodeConstant.ERROR
     );
-    logger(["updatedata", generatedResponse, error]);
+    logger(["CONTROLLER: Error while updating data", error]);
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

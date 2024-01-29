@@ -10,6 +10,7 @@ const { excryptPlainText, generateJWT } = require("../../../utils");
 
 const signUp = async (req, res) => {
   try {
+    logger(["CONTROLLER: Inside sign up"]);
     const userData = req.body;
 
     const encryptedPassword = await excryptPlainText(userData.password);
@@ -25,6 +26,7 @@ const signUp = async (req, res) => {
       responseConstant.SIGN_UP_SUCCESS,
       statusCodeConstant.SUCCESS
     );
+    logger(["CONTROLLER: Signed up successfully", newUser]);
     return res
       .setHeader(serverConstant.AUTHORIZATION_HEADER_KEY, `Bearer ${token}`)
       .status(generatedResponse.code)
@@ -35,7 +37,7 @@ const signUp = async (req, res) => {
       responseConstant.SIGN_UP_ERROR,
       statusCodeConstant.ERROR
     );
-    logger(["signup", generatedResponse, error]);
+    logger(["CONTROLLER: Error while signing up", error]);
 
     return res.status(generatedResponse.code).send(generatedResponse);
   }

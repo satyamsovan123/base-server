@@ -27,6 +27,7 @@ const verifyUpdateDataRequest = async (req, res, next) => {
       responseConstant.ERROR_OCCURRED_WHILE_VERIFYING,
       statusCodeConstant.ERROR
     );
+    logger(["MIDDLEWARE: Error while verifying update data request", error]);
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

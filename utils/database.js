@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { getServerDetails } = require("./getServerDetails");
+const { logger } = require("./logger");
 require("dotenv").config();
 
 async function connectToDB() {
@@ -11,7 +12,7 @@ async function connectToDB() {
       getServerDetails();
     },
     (error) => {
-      console.error(error);
+      logger(["UTIL: Error while connecting to database", error]);
     }
   );
 }

@@ -29,6 +29,7 @@ const verifyJWT = async (req, res, next) => {
       responseConstant.TOKEN_INVALID,
       statusCodeConstant.UNAUTHORIZED
     );
+    logger(["MIDDLEWARE: Error while verifying JWT", error]);
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

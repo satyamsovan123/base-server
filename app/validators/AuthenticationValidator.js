@@ -33,6 +33,10 @@ class AuthenticationValidator {
     try {
       await this.validationResult;
     } catch (error) {
+      logger([
+        "VALIDATOR: Error while validating authentication data request",
+        error,
+      ]);
       return error?.message ?? responseConstant.ERROR_OCCURRED_WHILE_VERIFYING;
     }
   }

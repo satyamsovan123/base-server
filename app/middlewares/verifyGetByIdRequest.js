@@ -28,6 +28,7 @@ const verifyGetByIdRequest = async (req, res, next) => {
       responseConstant.ERROR_OCCURRED_WHILE_VERIFYING,
       statusCodeConstant.ERROR
     );
+    logger(["MIDDLEWARE: Error while verifying get data by id", error]);
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

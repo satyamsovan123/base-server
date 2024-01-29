@@ -6,6 +6,7 @@ const { paginationConfig } = require("../../../configs/paginationConfig");
 
 const getDataById = async (req, res) => {
   try {
+    logger(["CONTROLLER: Inside get data by id"]);
     const userData = req.body;
 
     const data = await Data.find({
@@ -19,6 +20,7 @@ const getDataById = async (req, res) => {
         responseConstant.NO_DATA_FOUND,
         statusCodeConstant.NOT_FOUND
       );
+      logger(["CONTROLLER: No data found"]);
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
@@ -28,6 +30,7 @@ const getDataById = async (req, res) => {
       statusCodeConstant.SUCCESS
     );
 
+    logger(["CONTROLLER: Data found successfully", data]);
     return res.status(generatedResponse.code).send(generatedResponse);
   } catch (error) {
     const generatedResponse = responseBuilder(
@@ -35,7 +38,7 @@ const getDataById = async (req, res) => {
       responseConstant.GET_DATA_BY_ID_ERROR,
       statusCodeConstant.ERROR
     );
-    logger(["getdatabyid", generatedResponse, error]);
+    logger(["CONTROLLER: Error while getting data by id", error]);
 
     return res.status(generatedResponse.code).send(generatedResponse);
   }
@@ -43,6 +46,7 @@ const getDataById = async (req, res) => {
 
 const getAllData = async (req, res) => {
   try {
+    logger(["CONTROLLER: Inside get all data"]);
     const userData = req.body;
     let offset = req.query.offset ?? 0;
     let sortByCreatedDate = req.query.sortByCreatedDate ?? false;
@@ -64,8 +68,10 @@ const getAllData = async (req, res) => {
     let data = [];
 
     if (pagination === false) {
+      logger(["CONTROLLER: Pagination is disabled"]);
       data = await Data.find({ email: userData.email }).select("title article");
     } else {
+      logger(["CONTROLLER: Pagination is enabled"]);
       data = await Data.paginate(
         { email: userData.email },
         { ...paginationConfig, select: "title article" }
@@ -78,6 +84,7 @@ const getAllData = async (req, res) => {
         responseConstant.NO_DATA_FOUND,
         statusCodeConstant.NOT_FOUND
       );
+      logger(["CONTROLLER: No data found"]);
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
@@ -91,6 +98,7 @@ const getAllData = async (req, res) => {
       statusCodeConstant.SUCCESS
     );
 
+    logger(["CONTROLLER: All data found successfully", data]);
     return res.status(generatedResponse.code).send(generatedResponse);
   } catch (error) {
     const generatedResponse = responseBuilder(
@@ -98,8 +106,7 @@ const getAllData = async (req, res) => {
       responseConstant.GET_ALL_DATA_ERROR,
       statusCodeConstant.ERROR
     );
-    logger(["getalldata", generatedResponse, error]);
-
+    logger(["CONTROLLER: Error while getting all data", error]);
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

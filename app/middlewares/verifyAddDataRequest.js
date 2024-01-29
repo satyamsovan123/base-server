@@ -26,7 +26,6 @@ const verifyAddDataRequest = async (req, res, next) => {
       userData.email
     );
     if (existingData) {
-      logger("Inside addData and data exists");
       const generatedResponse = responseBuilder(
         {},
         responseConstant.DATA_ALREADY_EXISTS,
@@ -42,6 +41,7 @@ const verifyAddDataRequest = async (req, res, next) => {
       responseConstant.ERROR_OCCURRED_WHILE_VERIFYING,
       statusCodeConstant.ERROR
     );
+    logger(["MIDDLEWARE: Error while verifying add data request", error]);
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

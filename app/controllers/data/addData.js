@@ -5,6 +5,7 @@ const { Data } = require("../../models");
 
 const addData = async (req, res) => {
   try {
+    logger(["CONTROLLER: Inside add data"]);
     const userData = req.body;
 
     const newData = await Data.create(
@@ -21,6 +22,7 @@ const addData = async (req, res) => {
         responseConstant.ADD_DATA_ERROR,
         statusCodeConstant.ERROR
       );
+      logger(["CONTROLLER: Unable to add data"]);
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
@@ -30,6 +32,7 @@ const addData = async (req, res) => {
       statusCodeConstant.SUCCESS
     );
 
+    logger(["CONTROLLER: Data added successfully", newData]);
     return res.status(generatedResponse.code).send(generatedResponse);
   } catch (error) {
     const generatedResponse = responseBuilder(
@@ -37,7 +40,8 @@ const addData = async (req, res) => {
       responseConstant.ADD_DATA_ERROR,
       statusCodeConstant.ERROR
     );
-    logger(["adddata", generatedResponse, error]);
+    logger(["CONTROLLER: Error while adding data", error]);
+
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

@@ -1,5 +1,6 @@
 const Joi = require("joi");
 const { appConstant, responseConstant } = require("../../constants");
+const { logger } = require("../../utils/logger");
 
 class GetByIdValidator {
   constructor(data = {}) {
@@ -32,6 +33,7 @@ class GetByIdValidator {
     try {
       await this.validationResult;
     } catch (error) {
+      logger(["VALIDATOR: Error while validating get by id request", error]);
       return error?.message ?? responseConstant.ERROR_OCCURRED_WHILE_VERIFYING;
     }
   }

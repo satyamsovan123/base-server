@@ -1,7 +1,6 @@
 const appConstant = {
   USERNAME: "Username",
   EMAIL: "Email",
-
   PASSWORD: "Password",
 
   OTP: "OTP",

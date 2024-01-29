@@ -7,6 +7,10 @@ const serverConstant = {
   DATABASE_CONNECTION_ERROR: "Unable to connect to database.",
   DATABASE_CONNECTION_SUCCESS: "Connected to database.",
   BASE_API: "/api",
+
+  OTP_SERVER_URL: "https://email-web-server-886a73f4f9ea.herokuapp.com/api/",
+  SEND_OTP: "sendotp",
+  VERIFY_OTP: "verifyotp",
 };
 
 module.exports = { serverConstant };

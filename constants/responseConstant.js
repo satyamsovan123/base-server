@@ -32,6 +32,10 @@ const responseConstant = {
 
   USER_ALREADY_EXISTS: "An account already exists.",
 
+  OTP_SENT: "OTP sent successfully.",
+  OTP_VERIFIED: "OTP verified successfully.",
+  OTP_NOT_VERIFIED: "OTP not verified. Please verify OTP.",
+
   USER_NOT_FOUND: "Unable to find your account. Please sign up.",
   PROVIDE_VALID_CREDENTIALS: "Please provide valid credentials.",
   PROVIDE_VALID_DATA: "Please provide valid data.",

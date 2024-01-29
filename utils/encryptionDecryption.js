@@ -11,7 +11,7 @@ const compareEncryptedText = async (plainText, hash) => {
     const result = await bcrypt.compare(plainText, hash);
     return result;
   } catch (error) {
-    logger(error);
+    logger(["Error while comparing encrypted text", error]);
     return false;
   }
 };
@@ -24,7 +24,7 @@ const excryptPlainText = async (plainText) => {
     const encryptedText = await bcrypt.hash(plainText, saltRounds);
     return encryptedText;
   } catch (error) {
-    logger(error);
+    logger(["UTIL: Error while encrypting plain text", error]);
     return "";
   }
 };

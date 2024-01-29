@@ -1,5 +1,6 @@
 const Joi = require("joi");
 const { appConstant, responseConstant } = require("../../constants");
+const { logger } = require("../../utils/logger");
 
 class UpdateDataValidator {
   constructor(data = {}) {
@@ -50,6 +51,7 @@ class UpdateDataValidator {
     try {
       await this.validationResult;
     } catch (error) {
+      logger(["VALIDATOR: Error while validating update data request", error]);
       return error?.message ?? responseConstant.ERROR_OCCURRED_WHILE_VERIFYING;
     }
   }
