@@ -1,4 +1,5 @@
 const { responseConstant, statusCodeConstant } = require("../constants");
+const { logger } = require("./logger");
 
 class ResponseBuilder {
   constructor(data, message, code) {
@@ -18,6 +19,7 @@ class ResponseBuilder {
 }
 
 function responseBuilder(data, message, code) {
+  logger(`UTILS / RESPONSEBUILDER - Inside response builder`);
   return new ResponseBuilder(data, message, code).build();
 }
 

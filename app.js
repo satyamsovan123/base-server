@@ -3,12 +3,18 @@ global.appConfig = appConfig;
 
 const express = require("express");
 const cors = require("cors");
-const { connectToDB, disconnectFromDB } = require("./utils/database");
+const {
+  connectToDB,
+  disconnectFromDB,
+  checkDBConnection,
+} = require("./utils/database");
 const { serverConstant } = require("./constants/serverConstant");
 const app = express();
 const routes = require("./app/routes");
 
 const webFrontendURL = appConfig.frontendURL;
+
+app.use(express.static("public"));
 
 app.use(
   cors({

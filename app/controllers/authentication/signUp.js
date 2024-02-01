@@ -6,19 +6,21 @@ const {
   serverConstant,
 } = require("../../../constants");
 const { User } = require("../../models");
-const { excryptPlainText, generateJWT } = require("../../../utils");
+const { excryptPlainText, generateJWT, sendOTP } = require("../../../utils");
 
 const signUp = async (req, res) => {
   try {
-    logger(["CONTROLLER: Inside sign up"]);
+    logger(`CONTROLLERS / SIGNUP - Inside sign up`);
     const userData = req.body;
-
+    logger(`CONTROLLERS / SIGNUP - User - ${userData.email}`);
     const encryptedPassword = await excryptPlainText(userData.password);
     const newUser = new User({
       email: userData.email,
       password: encryptedPassword,
     });
+
     await User.create(newUser);
+    logger(`CONTROLLERS / SIGNUP - User created`);
 
     const token = await generateJWT({ email: userData.email });
     const generatedResponse = responseBuilder(
@@ -26,7 +28,7 @@ const signUp = async (req, res) => {
       responseConstant.SIGN_UP_SUCCESS,
       statusCodeConstant.SUCCESS
     );
-    logger(["CONTROLLER: Signed up successfully", newUser]);
+    logger(`CONTROLLERS / SIGNUP - User signed up successfully`);
     return res
       .setHeader(serverConstant.AUTHORIZATION_HEADER_KEY, `Bearer ${token}`)
       .status(generatedResponse.code)
@@ -37,8 +39,7 @@ const signUp = async (req, res) => {
       responseConstant.SIGN_UP_ERROR,
       statusCodeConstant.ERROR
     );
-    logger(["CONTROLLER: Error while signing up", error]);
-
+    logger(`CONTROLLERS / SIGNUP - Error while signing up \n Error - ${error}`);
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

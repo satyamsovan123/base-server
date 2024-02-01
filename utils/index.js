@@ -1,6 +1,6 @@
 const { logger } = require("./logger");
 const { overengineedBoxifier } = require("./overengineedBoxifier");
-const { generateJWT, sendOTP } = require("./authenticationHelper");
+const { generateJWT, sendOTP, verifyOTP } = require("./authenticationHelper");
 const {
   checkExistingData,
   checkExistingUser,
@@ -11,6 +11,8 @@ const {
   excryptPlainText,
 } = require("./encryptionDecryption");
 
+const { checkDBConnection } = require("./database");
+
 module.exports = {
   logger,
   overengineedBoxifier,
@@ -20,4 +22,6 @@ module.exports = {
   checkExistingData,
   checkExistingUser,
   sendOTP,
+  verifyOTP,
+  checkDBConnection,
 };

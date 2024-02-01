@@ -51,7 +51,7 @@ class UpdateDataValidator {
     try {
       await this.validationResult;
     } catch (error) {
-      logger(["VALIDATOR: Error while validating update data request", error]);
+      // logger(`VALIDATORS / UPDATEDATAVALIDATOR \n Error - ${error}`);
       return error?.message ?? responseConstant.ERROR_OCCURRED_WHILE_VERIFYING;
     }
   }

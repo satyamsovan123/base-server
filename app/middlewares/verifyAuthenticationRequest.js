@@ -5,12 +5,25 @@ const { AuthenticationValidator } = require("../validators");
 
 const verifyAuthenticationDataRequest = async (req, res, next) => {
   try {
+    logger(
+      `MIDDLEWARES / VERIFYAUTHENTICATIONREQUEST - Inside verify authentication request`
+    );
     const userData = req.body;
+    logger(
+      `MIDDLEWARES / VERIFYAUTHENTICATIONREQUEST - User - ${userData.email}`
+    );
     const currentPath = req.path.split("/")[1];
-
+    logger(
+      `MIDDLEWARES / VERIFYAUTHENTICATIONREQUEST - Current path - ${currentPath}`
+    );
     const dataValidationResult = await new AuthenticationValidator(
       userData
     ).getValidationResult();
+    logger(
+      `MIDDLEWARES / VERIFYAUTHENTICATIONREQUEST - Data validation result - ${
+        dataValidationResult || null
+      }`
+    );
     if (dataValidationResult) {
       const generatedResponse = responseBuilder(
         {},
@@ -22,7 +35,9 @@ const verifyAuthenticationDataRequest = async (req, res, next) => {
 
     const existingUser = await checkExistingUser(userData.email);
     if (existingUser && currentPath === "signup") {
-      logger("Inside signup and user exists");
+      logger(
+        `MIDDLEWARES / VERIFYAUTHENTICATIONREQUEST - Inside signup and user already exists`
+      );
       const generatedResponse = responseBuilder(
         {},
         responseConstant.USER_ALREADY_EXISTS,
@@ -30,7 +45,9 @@ const verifyAuthenticationDataRequest = async (req, res, next) => {
       );
       return res.status(generatedResponse.code).send(generatedResponse);
     } else if (!existingUser && currentPath === "signin") {
-      logger("Inside signin and user does not exist");
+      logger(
+        `MIDDLEWARES / VERIFYAUTHENTICATIONREQUEST - Inside signin and user does not exist`
+      );
       const generatedResponse = responseBuilder(
         {},
         responseConstant.USER_NOT_FOUND,
@@ -38,7 +55,9 @@ const verifyAuthenticationDataRequest = async (req, res, next) => {
       );
       return res.status(generatedResponse.code).send(generatedResponse);
     } else if (existingUser && currentPath === "signin") {
-      logger("Inside signin and user exist");
+      logger(
+        `MIDDLEWARES / VERIFYAUTHENTICATIONREQUEST - Inside signin and user exists`
+      );
       req.body["hashedPassword"] = existingUser.password;
     }
     next();
@@ -48,7 +67,9 @@ const verifyAuthenticationDataRequest = async (req, res, next) => {
       responseConstant.ERROR_OCCURRED_WHILE_VERIFYING,
       statusCodeConstant.ERROR
     );
-    logger(["MIDDLEWARE: Error while verifying authentication data", error]);
+    logger(
+      `MIDDLEWARES / VERIFYAUTHENTICATIONREQUEST - Error while verifying authentication request \n Error - ${error}`
+    );
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

@@ -5,6 +5,7 @@ const statusCodeConstant = {
   INVALID: 400,
   NOT_FOUND: 404,
   ALREADY_EXISTS: 409,
+  REDIRECT: 302,
 };
 
 module.exports = { statusCodeConstant };

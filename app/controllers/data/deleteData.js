@@ -5,9 +5,13 @@ const { Data } = require("../../models");
 
 const deleteAllData = async (req, res) => {
   try {
-    logger(["CONTROLLER: Inside delete all data"]);
+    logger(
+      `CONTROLLERS / DELETEALLDATA - Inside delete all data (associated with email)`
+    );
     const userData = req.body;
-
+    logger(
+      `CONTROLLERS / DELETEALLDATA - Request body - ${JSON.stringify(userData)}`
+    );
     const deletedData = await Data.deleteMany({ email: userData.email });
     if (!deletedData || deletedData?.deletedCount === 0) {
       const generatedResponse = responseBuilder(
@@ -15,7 +19,7 @@ const deleteAllData = async (req, res) => {
         responseConstant.NO_DATA_FOUND,
         statusCodeConstant.NOT_FOUND
       );
-      logger(["CONTROLLER: No data found"]);
+      logger(`CONTROLLERS / DELETEALLDATA - No data to delete`);
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
@@ -24,7 +28,10 @@ const deleteAllData = async (req, res) => {
       responseConstant.DELETE_ALL_DATA_SUCCESS,
       statusCodeConstant.SUCCESS
     );
-    logger(["CONTROLLER: All data deleted successfully"]);
+    logger(
+      `CONTROLLERS / DELETEALLDATA - All data (associated with email) deleted successfully`
+    );
+
     return res.status(generatedResponse.code).send(generatedResponse);
   } catch (error) {
     const generatedResponse = responseBuilder(
@@ -32,16 +39,22 @@ const deleteAllData = async (req, res) => {
       responseConstant.DELETE_ALL_DATA_ERROR,
       statusCodeConstant.ERROR
     );
-    logger(["CONTROLLER: Error while deleting all data", error]);
+    logger(
+      `CONTROLLERS / DELETEALLDATA - Error while deleting all data \n Error - ${error}`
+    );
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };
 
 const deleteDataById = async (req, res) => {
   try {
-    logger(["CONTROLLER: Inside delete data by id"]);
+    logger(`CONTROLLERS / DELETEDATABYID - Inside delete data by id`);
     const userData = req.body;
-
+    logger(
+      `CONTROLLERS / DELETEDATABYID - Request body - ${JSON.stringify(
+        userData
+      )}`
+    );
     const deletedData = await Data.deleteOne({
       email: userData.email,
       _id: userData.id,
@@ -53,7 +66,8 @@ const deleteDataById = async (req, res) => {
         responseConstant.NO_DATA_FOUND,
         statusCodeConstant.NOT_FOUND
       );
-      logger(["CONTROLLER: No data found"]);
+      logger(`CONTROLLERS / DELETEDATABYID - No data found to delete`);
+
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
@@ -62,7 +76,7 @@ const deleteDataById = async (req, res) => {
       responseConstant.DELETE_DATA_BY_ID_SUCCESS,
       statusCodeConstant.SUCCESS
     );
-    logger(["CONTROLLER: Data deleted successfully"]);
+    logger(`CONTROLLERS / DELETEDATABYID - Data deleted successfully`);
     return res.status(generatedResponse.code).send(generatedResponse);
   } catch (error) {
     const generatedResponse = responseBuilder(
@@ -70,7 +84,9 @@ const deleteDataById = async (req, res) => {
       responseConstant.DELETE_DATA_BY_ID_ERROR,
       statusCodeConstant.ERROR
     );
-    logger(["CONTROLLER: Error while deleting data by id", error]);
+    logger(
+      `CONTROLLERS / DELETEDATABYID - Error while deleting data by id \n Error - ${error}`
+    );
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

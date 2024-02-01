@@ -5,12 +5,23 @@ const { UpdateDataValidator } = require("../validators");
 
 const verifyUpdateDataRequest = async (req, res, next) => {
   try {
+    logger(
+      `MIDDLEWARES / VERIFYUPDATEDATAREQUEST - Inside verify update data request`
+    );
     const userData = req.body;
-
+    logger(
+      `MIDDLEWARES / VERIFYUPDATEDATAREQUEST - Request body - ${JSON.stringify(
+        userData
+      )}`
+    );
     const dataValidationResult = await new UpdateDataValidator(
       userData
     ).getValidationResult();
-    logger(dataValidationResult);
+    logger(
+      `MIDDLEWARES / VERIFYUPDATEDATAREQUEST - Data validation result - ${
+        dataValidationResult || null
+      }`
+    );
     if (dataValidationResult) {
       const generatedResponse = responseBuilder(
         {},
@@ -27,7 +38,9 @@ const verifyUpdateDataRequest = async (req, res, next) => {
       responseConstant.ERROR_OCCURRED_WHILE_VERIFYING,
       statusCodeConstant.ERROR
     );
-    logger(["MIDDLEWARE: Error while verifying update data request", error]);
+    logger(
+      `MIDDLEWARES / VERIFYJWT - Error while verifying update data request \n Error - ${error}`
+    );
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

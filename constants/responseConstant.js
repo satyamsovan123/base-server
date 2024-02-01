@@ -35,6 +35,8 @@ const responseConstant = {
   OTP_SENT: "OTP sent successfully.",
   OTP_VERIFIED: "OTP verified successfully.",
   OTP_NOT_VERIFIED: "OTP not verified. Please verify OTP.",
+  ACCOUNT_NOT_VERIFIED:
+    "Please verify your account. We have sent you a new OTP.",
 
   USER_NOT_FOUND: "Unable to find your account. Please sign up.",
   PROVIDE_VALID_CREDENTIALS: "Please provide valid credentials.",

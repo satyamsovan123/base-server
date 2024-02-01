@@ -45,7 +45,7 @@ router.get("/test", (req, res) => {
       return res.status(generatedResponse.code).send(generatedResponse);
     }
   } catch (error) {
-    logger([error]);
+    logger(`ROUTES / TEST - Error while testing \n Error - ${error}`);
     let generatedResponse = responseBuilder();
     return res.status(generatedResponse.code).send(generatedResponse);
   }

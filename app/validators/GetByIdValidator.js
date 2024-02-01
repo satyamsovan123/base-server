@@ -33,7 +33,7 @@ class GetByIdValidator {
     try {
       await this.validationResult;
     } catch (error) {
-      logger(["VALIDATOR: Error while validating get by id request", error]);
+      // logger(`VALIDATORS / GETBYIDVALIDATOR \n Error - ${error}`);
       return error?.message ?? responseConstant.ERROR_OCCURRED_WHILE_VERIFYING;
     }
   }

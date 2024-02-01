@@ -1,4 +1,7 @@
+const { logger } = require("./logger");
+
 function overengineedBoxifier(messages) {
+  logger(`UTILS / OVERENGINEEDBOXIFIER - Inside overengineed boxifier`);
   let hightestLengthOfMessage = 0;
   messages.forEach((message) => {
     if (message.length > hightestLengthOfMessage) {

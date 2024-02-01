@@ -5,9 +5,11 @@ const { Data } = require("../../models");
 
 const updateData = async (req, res) => {
   try {
-    logger(["CONTROLLER: Inside update data"]);
+    logger(`CONTROLLERS / UPDATEDATA - Inside update data`);
     const userData = req.body;
-
+    logger(
+      `CONTROLLERS / UPDATEDATA - Request body - ${JSON.stringify(userData)}`
+    );
     const updatedData = await Data.findByIdAndUpdate(userData.id, userData, {
       new: true,
     }).select("title article _id");
@@ -18,7 +20,7 @@ const updateData = async (req, res) => {
         responseConstant.UPDATE_DATA_ERROR,
         statusCodeConstant.NOT_FOUND
       );
-      logger(["CONTROLLER: No data found"]);
+      logger(`CONTROLLERS / UPDATEDATA - No data to update`);
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
@@ -27,7 +29,7 @@ const updateData = async (req, res) => {
       responseConstant.UPDATE_DATA_SUCCESS,
       statusCodeConstant.SUCCESS
     );
-    logger(["CONTROLLER: Data updated successfully", updatedData]);
+    logger(`CONTROLLERS / UPDATEDATA - Data updated successfully`);
     return res.status(generatedResponse.code).send(generatedResponse);
   } catch (error) {
     const generatedResponse = responseBuilder(
@@ -35,7 +37,9 @@ const updateData = async (req, res) => {
       responseConstant.UPDATE_DATA_ERROR,
       statusCodeConstant.ERROR
     );
-    logger(["CONTROLLER: Error while updating data", error]);
+    logger(
+      `CONTROLLERS / UPDATEDATA - Error while updating data \n Error - ${error}`
+    );
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

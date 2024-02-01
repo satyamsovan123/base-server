@@ -1,13 +1,15 @@
+const { appConfig } = require("../../configs/appConfig");
 const { responseConstant, statusCodeConstant } = require("../../constants");
-const { logger, checkExistingUser } = require("../../utils");
+const { logger, checkExistingUser, sendOTP } = require("../../utils");
 const { responseBuilder } = require("../../utils/responseBuilder");
 const jwt = require("jsonwebtoken");
 
 const verifyJWT = async (req, res, next) => {
   try {
-    logger("Inside JWT verificatfion");
+    logger(`MIDDLEWARES / VERIFYJWT - Inside verify JWT`);
     const token = req.headers?.authorization?.split(" ")[1];
     const decodedData = jwt.verify(token, appConfig.jwtSecret);
+    logger(`MIDDLEWARES / VERIFYJWT - JWT verified`);
     const existingUser = await checkExistingUser(decodedData?.email);
     // existingUser.email = "testuser@email.com";
     if (decodedData?.email !== existingUser?.email) {
@@ -16,20 +18,41 @@ const verifyJWT = async (req, res, next) => {
         responseConstant.PLEASE_SIGN_IN,
         statusCodeConstant.UNAUTHORIZED
       );
+      logger(
+        `MIDDLEWARES / VERIFYJWT - Decoded JWT email does not match with existing user email`
+      );
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
-    req.body["email"] = decodedData?.email;
-    // req.body["email"] = "testuser@email.com";
+    if (!existingUser.isVerified) {
+      logger(`MIDDLEWARES / VERIFYJWT - User email is not verified`);
+      const otpSent = await sendOTP(existingUser.email);
 
-    next();
+      if (!otpSent) {
+        const generatedResponse = responseBuilder(
+          {},
+          responseConstant.PLEASE_SIGN_IN,
+          statusCodeConstant.ERROR
+        );
+        logger(`MIDDLEWARES / VERIFYJWT - Error while sending OTP`);
+        return res.status(generatedResponse.code).send(generatedResponse);
+      }
+      logger(`MIDDLEWARES / VERIFYJWT - OTP sent successfully`);
+    } else {
+      logger(`MIDDLEWARES / VERIFYJWT - User is verified`);
+      req.body["email"] = decodedData?.email;
+      // req.body["email"] = "testuser@email.com";
+      next();
+    }
   } catch (error) {
     const generatedResponse = responseBuilder(
       {},
       responseConstant.TOKEN_INVALID,
       statusCodeConstant.UNAUTHORIZED
     );
-    logger(["MIDDLEWARE: Error while verifying JWT", error]);
+    logger(
+      `MIDDLEWARES / VERIFYJWT - Error while verifying JWT \n Error - ${error}`
+    );
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

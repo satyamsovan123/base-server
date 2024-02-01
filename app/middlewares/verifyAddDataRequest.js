@@ -5,13 +5,22 @@ const { checkExistingData } = require("../../utils");
 const { AddDataValidator } = require("../validators");
 
 const verifyAddDataRequest = async (req, res, next) => {
+  logger(`MIDDLEWARES / VERIFYADDDATAREQUEST - Inside verify add data request`);
   try {
     const userData = req.body;
-
+    logger(
+      `MIDDLEWARES / VERIFYADDDATAREQUEST - Request body - ${JSON.stringify(
+        userData
+      )}`
+    );
     const dataValidationResult = await new AddDataValidator(
       userData
     ).getValidationResult();
-    logger(dataValidationResult);
+    logger(
+      `MIDDLEWARES / VERIFYADDDATAREQUEST - Data validation result - ${
+        dataValidationResult || null
+      }`
+    );
     if (dataValidationResult) {
       const generatedResponse = responseBuilder(
         {},
@@ -31,6 +40,7 @@ const verifyAddDataRequest = async (req, res, next) => {
         responseConstant.DATA_ALREADY_EXISTS,
         statusCodeConstant.ALREADY_EXISTS
       );
+      logger(`MIDDLEWARES / VERIFYADDDATAREQUEST - Data already exists`);
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
@@ -41,7 +51,9 @@ const verifyAddDataRequest = async (req, res, next) => {
       responseConstant.ERROR_OCCURRED_WHILE_VERIFYING,
       statusCodeConstant.ERROR
     );
-    logger(["MIDDLEWARE: Error while verifying add data request", error]);
+    logger(
+      `MIDDLEWARES / VERIFYADDDATAREQUEST - Error while verifying add data request \n Error - ${error}`
+    );
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

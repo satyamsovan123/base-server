@@ -6,12 +6,22 @@ const { GetByIdValidator } = require("../validators");
 
 const verifyGetByIdRequest = async (req, res, next) => {
   try {
+    logger(`MIDDLEWARES / GETBYIDREQUEST - Inside verify get by id request`);
     const userData = req.body;
-
+    logger(
+      `MIDDLEWARES / GETBYIDREQUEST - Request body - ${JSON.stringify(
+        userData
+      )}`
+    );
     const dataValidationResult = await new GetByIdValidator(
       userData
     ).getValidationResult();
-    logger(dataValidationResult);
+    logger(
+      `MIDDLEWARES / GETBYIDREQUEST - Data validation result - ${
+        dataValidationResult || null
+      }`
+    );
+
     if (dataValidationResult) {
       const generatedResponse = responseBuilder(
         {},
@@ -28,7 +38,9 @@ const verifyGetByIdRequest = async (req, res, next) => {
       responseConstant.ERROR_OCCURRED_WHILE_VERIFYING,
       statusCodeConstant.ERROR
     );
-    logger(["MIDDLEWARE: Error while verifying get data by id", error]);
+    logger(
+      `MIDDLEWARERS / GETBYIDREQUEST - Error while verifying get by id request \n Error - ${error}`
+    );
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

@@ -10,8 +10,9 @@ const { compareEncryptedText, generateJWT } = require("../../../utils");
 
 const signIn = async (req, res) => {
   try {
-    logger(["CONTROLLER: Inside sign in"]);
+    logger(`CONTROLLERS / SIGNIN - Inside sign in`);
     const userData = req.body;
+    logger(`CONTROLLERS / SIGNIN - User - ${userData.email}`);
     const isPasswordValid = await compareEncryptedText(
       userData.password,
       userData.hashedPassword
@@ -22,17 +23,17 @@ const signIn = async (req, res) => {
         responseConstant.PROVIDE_VALID_CREDENTIALS,
         statusCodeConstant.UNAUTHORIZED
       );
-      logger(["CONTROLLER: Password invalid", error]);
+      logger(`CONTROLLERS / SIGNIN - Password is not valid`);
       return res.status(generatedResponse.code).send(generatedResponse);
     }
-
+    logger(`CONTROLLERS / SIGNIN - Password is valid`);
     const token = await generateJWT({ email: userData.email });
     const generatedResponse = responseBuilder(
       {},
       responseConstant.SIGN_IN_SUCCESS,
       statusCodeConstant.SUCCESS
     );
-    logger(["CONTROLLER: Signed in successfully", userData]);
+    logger(`CONTROLLERS / SIGNIN - User signed in successfully`);
     return res
       .setHeader(serverConstant.AUTHORIZATION_HEADER_KEY, `Bearer ${token}`)
       .status(generatedResponse.code)
@@ -43,7 +44,9 @@ const signIn = async (req, res) => {
       responseConstant.SIGN_IN_ERROR,
       statusCodeConstant.ERROR
     );
-    logger(["CONTROLLER: Error while signing in", error]);
+    logger(
+      `CONTROLLERS / SIGNIN - Error while signing in - ${userData.email} \n Error - ${error}`
+    );
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };
