@@ -4,7 +4,6 @@
   "description": "This is the base server for Node JS projects.",
   "main": "app.js",
   "scripts": {
-    "build": "webpack --config webpack.config.js --stats-error-details; node dist/bundled-server.js",
     "start": "NODE_ENV=production node app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "development": "NODE_ENV=development nodemon app.js",
