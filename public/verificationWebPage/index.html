@@ -235,7 +235,6 @@
     });
 
     function verifyOTP() {
-      console.log("verifyOTP");
       if (!otpIsValid) {
         return;
       }
@@ -246,10 +245,8 @@
       xhr.open("POST", "/api/verifyotp", true);
       xhr.onload = () => {
         if (xhr.status >= 200 && xhr.status < 300) {
-          console.log(xhr.responseText);
           console.log("Request successed with status -", xhr);
         } else {
-          console.error("Request failed with status -", xhr.status);
         }
         verifyOTPButton.disabled = false;
       };
