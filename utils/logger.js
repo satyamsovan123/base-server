@@ -22,7 +22,8 @@ const logFilePath =
 function logger(data) {
   const sanitizedData = `${new Date()} - ${data} \n`;
 
-  if (appConfig.environment === "development") console.log(data);
+  // if (appConfig.environment === "development") console.log(data);
+  console.log(data);
 
   fs.writeFile(logFilePath, sanitizedData, { flag: "a+" }, (error) => {
     if (error) {
