@@ -36,9 +36,14 @@ const sendOTP = async (email) => {
       "email-server-api-key": appConfig.emailServerAPIKey,
     };
     const apiUrl = `${appConfig.emailServer}${serverConstant.SEND_OTP}`;
-    logger(`UTILS / SENDOTP - Email details - ${postData}`);
+    logger(`UTILS / SENDOTP - Email details - ${JSON.stringify(postData)}`);
     const response = await axios.post(apiUrl, postData, { headers });
-    logger(`UTILS / SENDOTP - Response from email server - ${response.data}`);
+    logger(
+      `UTILS / VERIFYOTP - Response from email server - ${JSON.stringify(
+        response.data
+      )}`
+    );
+
     return response.data.code === statusCodeConstant.SUCCESS;
   } catch (error) {
     logger(`UTILS / SENDOTP - Error while sending OTP \n Error - ${error}`);
@@ -59,9 +64,13 @@ const verifyOTP = async (email, otp) => {
       "email-server-api-key": appConfig.emailServerAPIKey,
     };
     const apiUrl = `${appConfig.emailServer}${serverConstant.VERIFY_OTP}`;
-    logger(`UTILS / VERIFYOTP - Email details - ${postData}`);
+    logger(`UTILS / VERIFYOTP - Email details - ${JSON.stringify(postData)}`);
     const response = await axios.post(apiUrl, postData, { headers });
-    logger(`UTILS / VERIFYOTP - Response from email server - ${response.data}`);
+    logger(
+      `UTILS / VERIFYOTP - Response from email server - ${JSON.stringify(
+        response.data
+      )}`
+    );
     return response.data.code === statusCodeConstant.SUCCESS;
   } catch (error) {
     logger(`UTILS / VERIFYOTP - Error while verifying OTP \n Error - ${error}`);

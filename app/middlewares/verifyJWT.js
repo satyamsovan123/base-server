@@ -38,6 +38,12 @@ const verifyJWT = async (req, res, next) => {
         return res.status(generatedResponse.code).send(generatedResponse);
       }
       logger(`MIDDLEWARES / VERIFYJWT - OTP sent successfully`);
+      const generatedResponse = responseBuilder(
+        {},
+        responseConstant.OTP_NOT_VERIFIED,
+        statusCodeConstant.UNAUTHORIZED
+      );
+      return res.status(generatedResponse.code).send(generatedResponse);
     } else {
       logger(`MIDDLEWARES / VERIFYJWT - User is verified`);
       req.body["email"] = decodedData?.email;

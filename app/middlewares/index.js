@@ -5,6 +5,7 @@ const {
 const { verifyAddDataRequest } = require("./verifyAddDataRequest");
 const { verifyUpdateDataRequest } = require("./verifyUpdateDataRequest");
 const { verifyGetByIdRequest } = require("./verifyGetByIdRequest");
+const { verifyProcessOTPRequest } = require("./verifyProcessOTPRequest");
 
 module.exports = {
   verifyJWT,
@@ -12,4 +13,5 @@ module.exports = {
   verifyAddDataRequest,
   verifyAuthenticationDataRequest,
   verifyUpdateDataRequest,
+  verifyProcessOTPRequest,
 };

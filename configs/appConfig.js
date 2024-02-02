@@ -1,6 +1,6 @@
 const dotenv = require("dotenv");
 require("dotenv").config();
-const fs = require("fs");
+const fs = require("fs").promises;
 
 let appVersion = "1.0";
 fs.readFile("VERSION", "utf8", (err, data) => {

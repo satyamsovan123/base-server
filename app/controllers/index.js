@@ -4,7 +4,7 @@ const { getAllData, getDataById } = require("./data/getData");
 const { addData } = require("./data/addData");
 const { deleteAllData, deleteDataById } = require("./data/deleteData");
 const { updateData } = require("./data/updateData");
-const { verifyOTP } = require("./authentication/verifyOTP");
+const { processOTP } = require("./authentication/utils/processOTP");
 
 module.exports = {
   signUp,
@@ -15,5 +15,5 @@ module.exports = {
   deleteAllData,
   deleteDataById,
   updateData,
-  verifyOTP,
+  processOTP,
 };
