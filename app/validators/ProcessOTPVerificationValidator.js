@@ -2,7 +2,7 @@ const Joi = require("joi");
 const { appConstant, responseConstant } = require("../../constants");
 const { logger } = require("../../utils/logger");
 
-class ProcessOTPValidator {
+class ProcessOTPVerificationValidator {
   constructor(data = {}) {
     this.data = data;
     this.validatorSchema = Joi.object({
@@ -39,4 +39,4 @@ class ProcessOTPValidator {
   }
 }
 
-module.exports = { ProcessOTPValidator };
+module.exports = { ProcessOTPVerificationValidator };

@@ -6,12 +6,13 @@ const {
   serverConstant,
 } = require("../../../../constants");
 const { verifyOTP } = require("../../../../utils");
+const { User } = require("../../../models");
 
-const processOTP = async (req, res) => {
+const processOTPVerification = async (req, res) => {
   try {
-    logger(`CONTROLLERS / PROCESSOTP - Inside process OTP`);
+    logger(`CONTROLLERS / PROCESSOTPVERIFICATION - Inside process OTP`);
     const userData = req.body;
-    logger(`CONTROLLERS / PROCESSOTP - User - ${userData.email}`);
+    logger(`CONTROLLERS / PROCESSOTPVERIFICATION - User - ${userData.email}`);
 
     const otpVerified = await verifyOTP(userData.email, userData.otp);
 
@@ -21,12 +22,30 @@ const processOTP = async (req, res) => {
         responseConstant.OTP_NOT_VERIFIED,
         statusCodeConstant.INVALID
       );
-      logger(`CONTROLLERS / PROCESSOTP - OTP is wrong or expired`);
+      logger(`CONTROLLERS / PROCESSOTPVERIFICATION - OTP is wrong or expired`);
+      return res.status(generatedResponse.code).send(generatedResponse);
+    }
+
+    const updatedUser = await User.findOneAndUpdate(
+      { email: userData.email },
+      { isVerified: true },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      const generatedResponse = responseBuilder(
+        {},
+        responseConstant.UNABLE_TO_VERIFY_OTP,
+        statusCodeConstant.ERROR
+      );
+      logger(
+        `CONTROLLERS / PROCESSOTPVERIFICATION - Error while updating user - ${userData.email}`
+      );
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
     logger(
-      `CONTROLLERS / PROCESSOTP - User email verified with OTP successfully`
+      `CONTROLLERS / PROCESSOTPVERIFICATION - User email verified with OTP successfully and user updated`
     );
 
     const generatedResponse = responseBuilder(
@@ -42,10 +61,10 @@ const processOTP = async (req, res) => {
       statusCodeConstant.ERROR
     );
     logger(
-      `CONTROLLERS / PROCESSOTP - Error while verifying / processing OTP - ${userData.email} \n Error - ${error}`
+      `CONTROLLERS / PROCESSOTPVERIFICATION - Error while verifying / processing OTP - ${userData.email} \n Error - ${error}`
     );
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };
 
-module.exports = { processOTP };
+module.exports = { processOTPVerification };

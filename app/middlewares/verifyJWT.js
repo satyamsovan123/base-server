@@ -31,7 +31,7 @@ const verifyJWT = async (req, res, next) => {
       if (!otpSent) {
         const generatedResponse = responseBuilder(
           {},
-          responseConstant.PLEASE_SIGN_IN,
+          responseConstant.UNABLE_TO_SEND_OTP,
           statusCodeConstant.ERROR
         );
         logger(`MIDDLEWARES / VERIFYJWT - Error while sending OTP`);

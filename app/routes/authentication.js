@@ -5,12 +5,16 @@ const { signUp } = require("../controllers/authentication/signUp");
 const { signIn } = require("../controllers/authentication/signIn");
 const {
   verifyAuthenticationDataRequest,
-  verifyProcessOTPRequest,
+  verifyProcessOTPVerificationRequest,
 } = require("../middlewares");
-const { processOTP } = require("../controllers");
+const { processOTPVerification } = require("../controllers");
 
 router.post("/signup", verifyAuthenticationDataRequest, signUp);
 router.post("/signin", verifyAuthenticationDataRequest, signIn);
-router.post("/processOTP", verifyProcessOTPRequest, processOTP);
+router.post(
+  "/processOTPVerification",
+  verifyProcessOTPVerificationRequest,
+  processOTPVerification
+);
 
 module.exports = router;

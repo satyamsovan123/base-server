@@ -2,9 +2,9 @@ const { responseConstant, statusCodeConstant } = require("../../constants");
 const { logger } = require("../../utils");
 const { responseBuilder } = require("../../utils/responseBuilder");
 const { checkExistingData } = require("../../utils");
-const { ProcessOTPValidator } = require("../validators");
+const { ProcessOTPVerificationValidator } = require("../validators");
 
-const verifyProcessOTPRequest = async (req, res, next) => {
+const verifyProcessOTPVerificationRequest = async (req, res, next) => {
   logger(
     `MIDDLEWARES / VERIFYPROCESSOTPREQUEST - Inside verify process OTP request`
   );
@@ -15,7 +15,7 @@ const verifyProcessOTPRequest = async (req, res, next) => {
         userData
       )}`
     );
-    const dataValidationResult = await new ProcessOTPValidator(
+    const dataValidationResult = await new ProcessOTPVerificationValidator(
       userData
     ).getValidationResult();
     logger(
@@ -46,4 +46,4 @@ const verifyProcessOTPRequest = async (req, res, next) => {
   }
 };
 
-module.exports = { verifyProcessOTPRequest };
+module.exports = { verifyProcessOTPVerificationRequest };

@@ -34,8 +34,9 @@ const responseConstant = {
 
   OTP_SENT: "OTP sent successfully.",
   OTP_VERIFIED: "OTP verified successfully.",
+  UNABLE_TO_SEND_OTP: "Unable to send OTP. Please try again.",
   OTP_NOT_VERIFIED:
-    "OTP not verified. Please verify your email by using the provided OTP.",
+    "OTP not verified. Please verify your account. We have sent you a new OTP.",
   ACCOUNT_NOT_VERIFIED:
     "Please verify your account. We have sent you a new OTP.",
   UNABLE_TO_VERIFY_OTP: "Unable to verify OTP. Please try again.",
