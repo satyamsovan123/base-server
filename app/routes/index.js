@@ -51,6 +51,20 @@ router.get("/test", (req, res) => {
   }
 });
 
+router.get("/web", (req, res) => {
+  try {
+    res.sendFile("index.html", {
+      root: __dirname + "/../../public/base-server-ui",
+    });
+  } catch (error) {
+    logger(
+      `ROUTES / WEBPAGE - Error while testing web page \n Error - ${error}`
+    );
+    let generatedResponse = responseBuilder();
+    return res.status(generatedResponse.code).send(generatedResponse);
+  }
+});
+
 router.use("*", (req, res) => {
   try {
     const generatedResponse = responseBuilder(

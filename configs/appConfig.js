@@ -23,6 +23,7 @@ let appConfig = {
   emailServer: process.env.EMAIL_SERVER,
   emailServerAPIKey: process.env.EMAIL_SERVER_API_KEY,
   emailServerUsername: process.env.REGISTERED_EMAIL,
+  testEmail: process.env.TEST_EMAIL,
 };
 
 module.exports = { appConfig };

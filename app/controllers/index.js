@@ -1,6 +1,10 @@
 const { signUp } = require("./authentication/signUp");
 const { signIn } = require("./authentication/signIn");
-const { getAllData, getDataById } = require("./data/getData");
+const {
+  getUserDataById,
+  getAllUserData,
+  getAllData,
+} = require("./data/getData");
 const { addData } = require("./data/addData");
 const { deleteAllData, deleteDataById } = require("./data/deleteData");
 const { updateData } = require("./data/updateData");
@@ -11,8 +15,10 @@ const {
 module.exports = {
   signUp,
   signIn,
+
+  getUserDataById,
+  getAllUserData,
   getAllData,
-  getDataById,
   addData,
   deleteAllData,
   deleteDataById,

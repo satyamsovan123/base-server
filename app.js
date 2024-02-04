@@ -8,13 +8,14 @@ const {
   disconnectFromDB,
   checkDBConnection,
 } = require("./utils/database");
+const { scheduler } = require("./utils/scheduler");
 const { serverConstant } = require("./constants/serverConstant");
 const app = express();
 const routes = require("./app/routes");
 
 const webFrontendURL = appConfig.frontendURL;
 
-app.use(express.static("public"));
+app.use(express.static("public/base-server-ui"));
 
 app.use(
   cors({
@@ -44,4 +45,5 @@ process.on("uncaughtException", async (error) => {
 
 app.listen(appConfig.port, async () => {
   await connectToDB();
+  scheduler();
 });

@@ -39,7 +39,7 @@ const sendOTP = async (email) => {
     logger(`UTILS / SENDOTP - Email details - ${JSON.stringify(postData)}`);
     const response = await axios.post(apiUrl, postData, { headers });
     logger(
-      `UTILS / VERIFYOTP - Response from email server - ${JSON.stringify(
+      `UTILS / SENDOTP - Response from email server - ${JSON.stringify(
         response.data
       )}`
     );

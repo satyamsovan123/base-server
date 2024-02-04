@@ -5,12 +5,16 @@ const responseConstant = {
   SIGN_IN_SUCCESS: "Sign in successful.",
   SIGN_IN_ERROR: "Failed to sign in.",
 
-  GET_ALL_DATA_SUCCESS: "Retrieval of all data successful.",
-  REQUEST_FOR_MORE: "Please request for more.",
+  GET_ALL_USER_DATA_SUCCESS: "Retrieval of all user data successful.",
+  GET_ALL_USER_DATA_ERROR: "Failed to retrieve all user data.",
+
+  GET_USER_DATA_BY_ID_SUCCESS: "Retrieval of data successful.",
+  GET_USER_DATA_BY_ID_ERROR: "Failed to retrieve user data.",
+
+  GET_ALL_DATA: "Retrieval of all data successful.",
   GET_ALL_DATA_ERROR: "Failed to retrieve all data.",
 
-  GET_DATA_BY_ID_SUCCESS: "Retrieval of data successful.",
-  GET_DATA_BY_ID_ERROR: "Failed to retrieve data.",
+  REQUEST_FOR_MORE: "Please request for more.",
 
   ADD_DATA_SUCCESS: "Data added successfully.",
   ADD_DATA_ERROR: "Failed to add data.",
@@ -37,8 +41,7 @@ const responseConstant = {
   UNABLE_TO_SEND_OTP: "Unable to send OTP. Please try again.",
   OTP_NOT_VERIFIED:
     "OTP not verified. Please verify your account. We have sent you a new OTP.",
-  ACCOUNT_NOT_VERIFIED:
-    "Please verify your account. We have sent you a new OTP.",
+
   UNABLE_TO_VERIFY_OTP: "Unable to verify OTP. Please try again.",
 
   USER_NOT_FOUND: "Unable to find your account. Please sign up.",

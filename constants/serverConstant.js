@@ -9,6 +9,7 @@ const serverConstant = {
   BASE_API: "/api",
   SEND_OTP: "sendotp",
   VERIFY_OTP: "verifyotp",
+  SEND_CAMPAIGN_EMAIL: "sendcampaignemail",
 };
 
 module.exports = { serverConstant };

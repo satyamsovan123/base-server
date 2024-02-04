@@ -4,18 +4,20 @@ const { statusCodeConstant, responseConstant } = require("../../../constants");
 const { Data } = require("../../models");
 const { paginationConfig } = require("../../../configs/paginationConfig");
 
-const getDataById = async (req, res) => {
+const getUserDataById = async (req, res) => {
   try {
-    logger(`CONTROLLERS / GETDATABYID - Inside get data by id`);
+    logger(`CONTROLLERS / GETUSERDATABYID - Inside get user data by id`);
 
     const userData = req.body;
     logger(
-      `CONTROLLERS / GETDATABYID - Request body - ${JSON.stringify(userData)}`
+      `CONTROLLERS / GETUSERDATABYID - Request body - ${JSON.stringify(
+        userData
+      )}`
     );
     const data = await Data.find({
       _id: userData.id,
       email: userData.email,
-    }).select("title article");
+    }).select("title article email");
 
     if (!data || data.length === 0) {
       const generatedResponse = responseBuilder(
@@ -23,25 +25,68 @@ const getDataById = async (req, res) => {
         responseConstant.NO_DATA_FOUND,
         statusCodeConstant.NOT_FOUND
       );
-      logger(`CONTROLLERS / GETDATABYID - No data found`);
+      logger(`CONTROLLERS / GETUSERDATABYID - No data found`);
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
     const generatedResponse = responseBuilder(
       data,
-      responseConstant.GET_DATA_BY_ID_SUCCESS,
+      responseConstant.GET_USER_DATA_BY_ID_SUCCESS,
       statusCodeConstant.SUCCESS
     );
-    logger(`CONTROLLERS / GETDATABYID - Data found successfully`);
+    logger(`CONTROLLERS / GETUSERDATABYID - Data found successfully`);
     return res.status(generatedResponse.code).send(generatedResponse);
   } catch (error) {
     const generatedResponse = responseBuilder(
       {},
-      responseConstant.GET_DATA_BY_ID_ERROR,
+      responseConstant.GET_USER_DATA_BY_ID_ERROR,
       statusCodeConstant.ERROR
     );
     logger(
-      `CONTROLLERS / GETDATABYID - Error while getting data by id \n Error - ${error}`
+      `CONTROLLERS / GETUSERDATABYID - Error while getting data by id \n Error - ${error}`
+    );
+    return res.status(generatedResponse.code).send(generatedResponse);
+  }
+};
+
+const getAllUserData = async (req, res) => {
+  try {
+    logger(
+      `CONTROLLERS / GETALLUSERDATA - Inside get all user data (associated with email)`
+    );
+    const userData = req.body;
+    logger(
+      `CONTROLLER / GETALLUSERDATA - Request body - ${JSON.stringify(userData)}`
+    );
+
+    const data = await Data.find({ email: userData.email }).select(
+      "title article email"
+    );
+
+    if (!data || data.length === 0) {
+      const generatedResponse = responseBuilder(
+        {},
+        responseConstant.NO_DATA_FOUND,
+        statusCodeConstant.NOT_FOUND
+      );
+      logger(`CONTROLLERS / GETALLUSERDATA - No data found`);
+      return res.status(generatedResponse.code).send(generatedResponse);
+    }
+
+    const generatedResponse = responseBuilder(data, statusCodeConstant.SUCCESS);
+
+    logger(
+      `CONTROLLERS / GETALLUSERDATA - All user data (associated with email) found successfully`
+    );
+    return res.status(generatedResponse.code).send(generatedResponse);
+  } catch (error) {
+    const generatedResponse = responseBuilder(
+      {},
+      responseConstant.GET_ALL_USER_DATA_ERROR,
+      statusCodeConstant.ERROR
+    );
+    logger(
+      `CONTROLLERS / GETALLUSERDATA - Error while getting all user data \n Error - ${error}`
     );
     return res.status(generatedResponse.code).send(generatedResponse);
   }
@@ -49,14 +94,16 @@ const getDataById = async (req, res) => {
 
 const getAllData = async (req, res) => {
   try {
-    logger(
-      `CONTROLLERS / GETALLDATA - Inside get all data (associated with email)`
-    );
-    const userData = req.body;
+    logger(`CONTROLLERS / GETALLDATA - Inside get all data`);
+    const userData = req?.body;
     logger(
       `CONTROLLER / GETALLDATA - Request body - ${JSON.stringify(userData)}`
     );
-    logger(`CONTROLLER / GETALLDATA - Request query param - ${req.query}`);
+    logger(
+      `CONTROLLER / GETALLDATA - Request query param - ${JSON.stringify(
+        req?.query
+      )}`
+    );
     let offset = req.query.offset ?? 0;
     let sortByCreatedDate = req.query.sortByCreatedDate ?? false;
     let pagination = true;
@@ -78,15 +125,14 @@ const getAllData = async (req, res) => {
 
     if (pagination === false) {
       logger(`CONTROLLERS / GETALLDATA - Pagination disabled`);
-      data = await Data.find({ email: userData.email }).select("title article");
+      data = await Data.find({}).select("title article email");
     } else {
       logger(`CONTROLLERS / GETALLDATA - Pagination enabled`);
       data = await Data.paginate(
-        { email: userData.email },
-        { ...paginationConfig, select: "title article" }
+        {},
+        { ...paginationConfig, select: "title article email" }
       );
     }
-
     if (!data || data.length === 0) {
       const generatedResponse = responseBuilder(
         {},
@@ -100,21 +146,19 @@ const getAllData = async (req, res) => {
     const generatedResponse = responseBuilder(
       data,
       pagination === false
-        ? responseConstant.GET_ALL_DATA_SUCCESS
-        : responseConstant.GET_ALL_DATA_SUCCESS +
+        ? responseConstant.GET_ALL_USER_DATA_SUCCESS
+        : responseConstant.GET_ALL_USER_DATA_SUCCESS +
             " " +
             responseConstant.REQUEST_FOR_MORE,
       statusCodeConstant.SUCCESS
     );
 
-    logger(
-      `CONTROLLERS / GETALLDATA - All data (associated with email) found successfully`
-    );
+    logger(`CONTROLLERS / GETALLDATA - All data found successfully`);
     return res.status(generatedResponse.code).send(generatedResponse);
   } catch (error) {
     const generatedResponse = responseBuilder(
       {},
-      responseConstant.GET_ALL_DATA_ERROR,
+      responseConstant.GET_ALL_USER_DATA_ERROR,
       statusCodeConstant.ERROR
     );
     logger(
@@ -124,4 +168,4 @@ const getAllData = async (req, res) => {
   }
 };
 
-module.exports = { getDataById, getAllData };
+module.exports = { getUserDataById, getAllUserData, getAllData };
