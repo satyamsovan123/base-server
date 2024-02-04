@@ -7,13 +7,13 @@
   },
   "item": [
     {
-      "name": "Get data by id",
+      "name": "Get user data by id",
       "request": {
         "method": "POST",
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"id\": \"65af44cda7eb8d9d8fec0404\"\n}",
+          "raw": "{\n    \"id\": \"65bf4286c391b49c87c9ff2a\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -21,8 +21,8 @@
           }
         },
         "url": {
-          "raw": "{{server}}getdatabyid",
-          "host": ["{{server}}getdatabyid"]
+          "raw": "{{server}}getuserdatabyid",
+          "host": ["{{server}}getuserdatabyid"]
         }
       },
       "response": []
@@ -116,6 +116,36 @@
       "response": []
     },
     {
+      "name": "Get all user data",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer ",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{server}}getalluserdata",
+          "host": ["{{server}}getalluserdata"]
+        }
+      },
+      "response": []
+    },
+    {
       "name": "Sign in",
       "event": [
         {
@@ -163,7 +193,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"email\": \"a@a.com\",\n    \"password\": \"aaaaaa\"\n}",
+          "raw": "{\n    \"email\": \"someemail@gmail.com\",\n    \"password\": \"123456\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -208,7 +238,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"email\": \"a@a.com\",\n    \"password\": \"aaaaaa\"\n}",
+          "raw": "{\n    \"email\": \"someemail@gmail.com\",\n    \"password\": \"123456\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -229,7 +259,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "  {\n    \"title\": \"title\",\n    \"article\": \"article\"\n  }",
+          "raw": "  {\n    \"title\": \"title is title\",\n    \"article\": \"article was article article was article article was article article was article article was article article was article.\"\n  }",
           "options": {
             "raw": {
               "language": "json"
@@ -250,7 +280,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"id\": \"65af44cda7eb8d9d8fec0404\",\n    \"title\": \"title\",\n    \"article\": \"article\"\n}",
+          "raw": "{\n        \"title\": \"title is title new\",\n        \"article\": \"article was article article was article article was article article was article article was article article was article new.\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -288,7 +318,7 @@
     {
       "name": "Delete data by id",
       "request": {
-        "method": "DELETE",
+        "method": "POST",
         "header": [],
         "body": {
           "mode": "raw",
@@ -313,7 +343,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"email\": \"a@a.com\",\n    \"otp\": \"123456\"\n}",
+          "raw": "{\n    \"email\": \"someemail@gmail.com\",\n    \"otp\": \"654321\"\n}",
           "options": {
             "raw": {
               "language": "json"
