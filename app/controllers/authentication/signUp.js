@@ -23,6 +23,15 @@ const signUp = async (req, res) => {
     logger(`CONTROLLERS / SIGNUP - User created`);
 
     const token = await generateJWT({ email: userData.email });
+    if (!token) {
+      const generatedResponse = responseBuilder(
+        {},
+        responseConstant.SIGN_IN_ERROR,
+        statusCodeConstant.ERROR
+      );
+      logger(`CONTROLLERS / SIGNIN - Error while generating JWT`);
+      return res.status(generatedResponse.code).send(generatedResponse);
+    }
     const generatedResponse = responseBuilder(
       {},
       responseConstant.SIGN_UP_SUCCESS,
@@ -30,6 +39,7 @@ const signUp = async (req, res) => {
     );
     logger(`CONTROLLERS / SIGNUP - User signed up successfully`);
     return res
+      .cookie("Bearer", `${token}`)
       .setHeader(serverConstant.AUTHORIZATION_HEADER_KEY, `Bearer ${token}`)
       .status(generatedResponse.code)
       .send(generatedResponse);

@@ -125,12 +125,12 @@ const getAllData = async (req, res) => {
 
     if (pagination === false) {
       logger(`CONTROLLERS / GETALLDATA - Pagination disabled`);
-      data = await Data.find({}).select("title article email");
+      data = await Data.find({}).select("title article email -_id");
     } else {
       logger(`CONTROLLERS / GETALLDATA - Pagination enabled`);
       data = await Data.paginate(
         {},
-        { ...paginationConfig, select: "title article email" }
+        { ...paginationConfig, select: "title article email -_id" }
       );
     }
     if (!data || data.length === 0) {
@@ -146,8 +146,8 @@ const getAllData = async (req, res) => {
     const generatedResponse = responseBuilder(
       data,
       pagination === false
-        ? responseConstant.GET_ALL_USER_DATA_SUCCESS
-        : responseConstant.GET_ALL_USER_DATA_SUCCESS +
+        ? responseConstant.GET_ALL_DATA
+        : responseConstant.GET_ALL_DATA +
             " " +
             responseConstant.REQUEST_FOR_MORE,
       statusCodeConstant.SUCCESS

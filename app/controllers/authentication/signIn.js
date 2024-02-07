@@ -28,6 +28,15 @@ const signIn = async (req, res) => {
     }
     logger(`CONTROLLERS / SIGNIN - Password is valid`);
     const token = await generateJWT({ email: userData.email });
+    if (!token) {
+      const generatedResponse = responseBuilder(
+        {},
+        responseConstant.SIGN_IN_ERROR,
+        statusCodeConstant.ERROR
+      );
+      logger(`CONTROLLERS / SIGNIN - Error while generating JWT`);
+      return res.status(generatedResponse.code).send(generatedResponse);
+    }
     const generatedResponse = responseBuilder(
       {},
       responseConstant.SIGN_IN_SUCCESS,
@@ -35,6 +44,7 @@ const signIn = async (req, res) => {
     );
     logger(`CONTROLLERS / SIGNIN - User signed in successfully`);
     return res
+      .cookie("Bearer", `${token}`)
       .setHeader(serverConstant.AUTHORIZATION_HEADER_KEY, `Bearer ${token}`)
       .status(generatedResponse.code)
       .send(generatedResponse);
@@ -44,9 +54,7 @@ const signIn = async (req, res) => {
       responseConstant.SIGN_IN_ERROR,
       statusCodeConstant.ERROR
     );
-    logger(
-      `CONTROLLERS / SIGNIN - Error while signing in - ${userData.email} \n Error - ${error}`
-    );
+    logger(`CONTROLLERS / SIGNIN - Error while signing in \n Error - ${error}`);
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

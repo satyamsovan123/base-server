@@ -4,6 +4,7 @@ const { logger } = require("./logger");
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
 const { statusCodeConstant } = require("../constants");
+const { excryptPlainText } = require("./encryptionDecryption");
 
 const generateJWT = async (data) => {
   logger(`UTILS / GENERATEJWT - Inside generate JWT`);
@@ -14,6 +15,7 @@ const generateJWT = async (data) => {
     const token = jwt.sign(data, appConfig.jwtSecret, {
       expiresIn: appConfig.jwtExpiresIn,
     });
+
     logger(`UTILS / GENERATEJWT - JWT generated for ${JSON.stringify(data)}`);
     return token;
   } catch (error) {

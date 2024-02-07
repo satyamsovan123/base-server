@@ -26,6 +26,7 @@
     "mongoose-paginate-v2": "^1.8.0",
     "node-cron": "^3.0.3",
     "nodemailer": "^6.9.8",
+    "uuidv4": "^6.2.13",
     "winston": "^3.11.0"
   },
   "devDependencies": {
