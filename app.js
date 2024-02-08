@@ -1,5 +1,6 @@
 const { appConfig } = require("./configs/appConfig");
 global.appConfig = appConfig;
+const cookieParser = require("cookie-parser");
 
 const express = require("express");
 const cors = require("cors");
@@ -16,6 +17,7 @@ const routes = require("./app/routes");
 const webFrontendURL = appConfig.frontendURL;
 
 app.use(express.static("public/base-server-ui"));
+app.use(cookieParser());
 
 app.use(
   cors({
