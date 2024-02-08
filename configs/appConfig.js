@@ -24,7 +24,7 @@ let appConfig = {
   emailServerAPIKey: process.env.EMAIL_SERVER_API_KEY,
   emailServerUsername: process.env.REGISTERED_EMAIL,
   testEmail: process.env.TEST_EMAIL,
-  cronJobFrequency: process.env.CRON_JOB_FREQUENCY,
+  cronJobFrequency: process.env.CRON_JOB_FREQUENCY.toString(),
 };
 
 module.exports = { appConfig };
