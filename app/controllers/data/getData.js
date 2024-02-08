@@ -3,6 +3,7 @@ const { responseBuilder } = require("../../../utils/responseBuilder");
 const { statusCodeConstant, responseConstant } = require("../../../constants");
 const { Data } = require("../../models");
 const { paginationConfig } = require("../../../configs/paginationConfig");
+var cookieParser = require("cookie-parser");
 
 const getUserDataById = async (req, res) => {
   try {
