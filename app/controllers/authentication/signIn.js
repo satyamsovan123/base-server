@@ -11,6 +11,7 @@ const { compareEncryptedText, generateJWT } = require("../../../utils");
 const signIn = async (req, res) => {
   try {
     logger(`CONTROLLERS / SIGNIN - Inside sign in`);
+    logger(`req`, req);
     const userData = req.body;
     logger(`CONTROLLERS / SIGNIN - User - ${userData.email}`);
     const isPasswordValid = await compareEncryptedText(
