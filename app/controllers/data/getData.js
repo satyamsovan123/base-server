@@ -96,7 +96,7 @@ const getAllData = async (req, res) => {
   try {
     logger(`CONTROLLERS / GETALLDATA - Inside get all data`);
     const userData = req?.body;
-    logger(req);
+    logger(req.cookies);
 
     logger(
       `CONTROLLER / GETALLDATA - Request body - ${JSON.stringify(userData)}`
