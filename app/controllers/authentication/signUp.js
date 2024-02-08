@@ -11,7 +11,7 @@ const { excryptPlainText, generateJWT, sendOTP } = require("../../../utils");
 const signUp = async (req, res) => {
   try {
     logger(`CONTROLLERS / SIGNUP - Inside sign up`);
-    logger(`req`, req);
+    logger(`CONTROLLERS / SIGNUP - Req - ${JSON.stringify(req.body)}`);
 
     const userData = req.body;
     logger(`CONTROLLERS / SIGNUP - User - ${userData.email}`);
