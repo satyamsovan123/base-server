@@ -47,7 +47,8 @@ const signIn = async (req, res) => {
     return res
       .cookie("Bearer", `${token}`, {
         secure: true,
-        // httpOnly: true,
+        httpOnly: true,
+        sameSite: "none",
         maxAge: 86400 * 1000,
       })
       .setHeader(serverConstant.AUTHORIZATION_HEADER_KEY, `Bearer ${token}`)
