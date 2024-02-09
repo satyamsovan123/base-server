@@ -47,7 +47,6 @@ const signIn = async (req, res) => {
 
     return res
       .cookie("Bearer", `${token}`, {
-        domain: "web.app",
         httpOnly: true,
         secure: true,
         sameSite: "none",
