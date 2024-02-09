@@ -46,6 +46,7 @@ const signIn = async (req, res) => {
     logger(`CONTROLLERS / SIGNIN - User signed in successfully`);
     return res
       .cookie("Bearer", `${token}`, {
+        domain: "https://base-server-ui.web.app",
         secure: true,
         httpOnly: true,
         sameSite: "none",
