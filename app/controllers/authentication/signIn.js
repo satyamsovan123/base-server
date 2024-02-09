@@ -44,9 +44,10 @@ const signIn = async (req, res) => {
       statusCodeConstant.SUCCESS
     );
     logger(`CONTROLLERS / SIGNIN - User signed in successfully`);
+
     return res
       .cookie("Bearer", `${token}`, {
-        domain: ".web.app",
+        domain: "web.app",
         httpOnly: true,
         secure: true,
         sameSite: "none",
