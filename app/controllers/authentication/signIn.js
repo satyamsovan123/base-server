@@ -46,8 +46,8 @@ const signIn = async (req, res) => {
     logger(`CONTROLLERS / SIGNIN - User signed in successfully`);
     return res
       .cookie("Bearer", `${token}`, {
-        // secure: true,
-        httpOnly: true,
+        secure: true,
+        // httpOnly: true,
         maxAge: 86400 * 1000,
       })
       .setHeader(serverConstant.AUTHORIZATION_HEADER_KEY, `Bearer ${token}`)
