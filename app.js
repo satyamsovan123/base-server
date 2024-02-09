@@ -24,6 +24,7 @@ app.use(
     origin: webFrontendURL,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     exposedHeaders: serverConstant.AUTHORIZATION_HEADER_KEY,
+    credentials: true,
   })
 );
 
