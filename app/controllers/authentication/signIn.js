@@ -46,9 +46,9 @@ const signIn = async (req, res) => {
     logger(`CONTROLLERS / SIGNIN - User signed in successfully`);
     return res
       .cookie("Bearer", `${token}`, {
-        domain: "https://base-server-ui.web.app",
-        secure: true,
+        domain: "base-server-ui.web.app",
         httpOnly: true,
+        secure: true,
         sameSite: "none",
         path: "/",
         maxAge: 86400 * 1000,
