@@ -25,6 +25,7 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: [
       serverConstant.AUTHORIZATION_HEADER_KEY,
+      "Content-Type",
       "Set-Cookie",
       "Cookie",
     ],
