@@ -9,12 +9,12 @@ const verifyJWT = async (req, res, next) => {
     logger(`MIDDLEWARES / VERIFYJWT - Inside verify JWT`);
     const tokenFromHeader = req.headers?.authorization?.split(" ")[1];
     const tokenFromCookies = req.cookies;
-    console.log(tokenFromCookies);
-    logger(
-      `MIDDLEWARES / VERIFYJWT - ${
-        tokenFromCookies ? "Token from cookies" : "Token from header"
-      }`
-    );
+    if (tokenFromCookies) {
+      logger(`MIDDLEWARES / VERIFYJWT - Token from cookies`);
+    }
+    if (tokenFromHeader) {
+      logger(`MIDDLEWARES / VERIFYJWT - Token from header`);
+    }
     const token = tokenFromHeader || tokenFromCookies;
 
     const decodedData = jwt.verify(token, appConfig.jwtSecret);

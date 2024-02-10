@@ -73,7 +73,11 @@ const getAllUserData = async (req, res) => {
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
-    const generatedResponse = responseBuilder(data, statusCodeConstant.SUCCESS);
+    const generatedResponse = responseBuilder(
+      data,
+      responseConstant.GET_ALL_USER_DATA_SUCCESS,
+      statusCodeConstant.SUCCESS
+    );
 
     logger(
       `CONTROLLERS / GETALLUSERDATA - All user data (associated with email) found successfully`
