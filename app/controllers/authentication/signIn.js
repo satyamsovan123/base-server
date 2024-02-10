@@ -46,12 +46,12 @@ const signIn = async (req, res) => {
     logger(`CONTROLLERS / SIGNIN - User signed in successfully`);
 
     return res
-      .cookie("Bearer", `${token}`, {
+      .cookie(serverConstant.AUTHORIZATION_HEADER_KEY, `Bearer ${token}`, {
         httpOnly: true,
         secure: true,
         sameSite: "none",
         path: "/",
-        maxAge: 86400 * 1000,
+        maxAge: 24 * 60 * 60 * 1000,
       })
       .setHeader(serverConstant.AUTHORIZATION_HEADER_KEY, `Bearer ${token}`)
       .status(generatedResponse.code)

@@ -7,7 +7,16 @@ const jwt = require("jsonwebtoken");
 const verifyJWT = async (req, res, next) => {
   try {
     logger(`MIDDLEWARES / VERIFYJWT - Inside verify JWT`);
-    const token = req.headers?.authorization?.split(" ")[1];
+    const tokenFromHeader = req.headers?.authorization?.split(" ")[1];
+    const tokenFromCookies = req.cookies();
+    console.log(tokenFromCookies);
+    logger(
+      `MIDDLEWARES / VERIFYJWT - ${
+        tokenFromCookies ? "Token from cookies" : "Token from header"
+      }`
+    );
+    const token = tokenFromHeader || tokenFromCookies;
+
     const decodedData = jwt.verify(token, appConfig.jwtSecret);
     logger(`MIDDLEWARES / VERIFYJWT - JWT verified`);
     const existingUser = await checkExistingUser(decodedData?.email);
