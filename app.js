@@ -23,6 +23,11 @@ app.use(
   cors({
     origin: webFrontendURL,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: [
+      serverConstant.AUTHORIZATION_HEADER_KEY,
+      "Cookie",
+      "Set-Cookie",
+    ],
     exposedHeaders: [
       serverConstant.AUTHORIZATION_HEADER_KEY,
       "Cookie",
