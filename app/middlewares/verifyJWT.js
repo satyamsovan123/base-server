@@ -8,7 +8,7 @@ const verifyJWT = async (req, res, next) => {
   try {
     logger(`MIDDLEWARES / VERIFYJWT - Inside verify JWT`);
     const tokenFromHeader = req.headers?.authorization?.split(" ")[1];
-    const tokenFromCookies = req.cookies();
+    const tokenFromCookies = req.cookies;
     console.log(tokenFromCookies);
     logger(
       `MIDDLEWARES / VERIFYJWT - ${
