@@ -49,10 +49,9 @@ const signIn = async (req, res) => {
       .cookie("Bearer", `${token}`, {
         httpOnly: true,
         secure: true,
-        sameSite: "Lax",
+        sameSite: "none",
         path: "/",
         maxAge: 86400 * 1000,
-        domain: "https://base-server-ui.web.app",
       })
       .setHeader(serverConstant.AUTHORIZATION_HEADER_KEY, `Bearer ${token}`)
       .status(generatedResponse.code)
