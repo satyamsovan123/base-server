@@ -49,7 +49,7 @@ const signIn = async (req, res) => {
       .cookie("Bearer", `${token}`, {
         httpOnly: true,
         secure: true,
-        sameSite: "strict",
+        sameSite: "lax",
         path: "/",
         maxAge: 86400 * 1000,
       })
