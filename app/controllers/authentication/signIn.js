@@ -52,6 +52,7 @@ const signIn = async (req, res) => {
         sameSite: "Lax",
         path: "/",
         maxAge: 86400 * 1000,
+        domain: "https://base-server-ui.web.app",
       })
       .setHeader(serverConstant.AUTHORIZATION_HEADER_KEY, `Bearer ${token}`)
       .status(generatedResponse.code)
