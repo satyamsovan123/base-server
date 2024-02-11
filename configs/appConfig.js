@@ -26,6 +26,7 @@ let appConfig = {
   testEmail: process.env.TEST_EMAIL,
   cronJobFrequency: process.env.CRON_JOB_FREQUENCY.toString(),
   useRateLimiter: JSON.parse(process.env.USE_RATE_LIMITER) === true,
+  requestsPerMinute: JSON.parse(process.env.REQUESTS_PER_MINUTE),
 };
 
 module.exports = { appConfig };
