@@ -1,4 +1,3 @@
-// const winston = require("winston");
 const { appConfig } = require("../configs/appConfig");
 const path = require("path");
 const fs = require("fs");

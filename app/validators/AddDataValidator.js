@@ -43,7 +43,6 @@ class AddDataValidator {
     try {
       await this.validationResult;
     } catch (error) {
-      // logger(`VALIDATORS / ADDDATAVALIDATOR \n Error - ${error}`);
       return error?.message ?? responseConstant.ERROR_OCCURRED_WHILE_VERIFYING;
     }
   }
