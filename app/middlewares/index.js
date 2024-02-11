@@ -8,8 +8,10 @@ const { verifyGetByIdRequest } = require("./verifyGetByIdRequest");
 const {
   verifyProcessOTPVerificationRequest,
 } = require("./verifyProcessOTPVerificationRequest");
+const rateLimiter = require("./rateLimiter");
 
 module.exports = {
+  rateLimiter,
   verifyJWT,
   verifyGetByIdRequest,
   verifyAddDataRequest,

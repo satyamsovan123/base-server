@@ -6,6 +6,7 @@ const statusCodeConstant = {
   NOT_FOUND: 404,
   ALREADY_EXISTS: 409,
   REDIRECT: 302,
+  TOO_MANY_REQUESTS: 429,
 };
 
 module.exports = { statusCodeConstant };

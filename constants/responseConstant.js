@@ -5,6 +5,9 @@ const responseConstant = {
   SIGN_IN_SUCCESS: "Sign in successful.",
   SIGN_IN_ERROR: "Failed to sign in.",
 
+  SIGN_OUT_SUCCESS: "Sign out successful.",
+  SIGN_OUT_ERROR: "Failed to sign out.",
+
   GET_ALL_USER_DATA_SUCCESS: "Retrieval of all user data successful.",
   GET_ALL_USER_DATA_ERROR: "Failed to retrieve all user data.",
 
@@ -43,6 +46,8 @@ const responseConstant = {
     "OTP not verified. Please verify your account. We have sent you a new OTP.",
 
   UNABLE_TO_VERIFY_OTP: "Unable to verify OTP. Please try again.",
+
+  TOO_MANY_REQUESTS: "Too many requests. Please try again later.",
 
   USER_NOT_FOUND: "Unable to find your account. Please sign up.",
   PROVIDE_VALID_CREDENTIALS: "Please provide valid credentials.",

@@ -1,8 +1,10 @@
 const { appConfig } = require("./configs/appConfig");
 global.appConfig = appConfig;
+
 const cookieParser = require("cookie-parser");
 const compression = require("compression");
 const helmet = require("helmet");
+const trimRequest = require("trim-request");
 
 const express = require("express");
 const cors = require("cors");
@@ -19,6 +21,8 @@ const routes = require("./app/routes");
 const webFrontendURL = appConfig.frontendURL;
 
 app.use(express.static("public/base-server-ui"));
+
+app.use(trimRequest.all);
 
 app.use(cookieParser());
 

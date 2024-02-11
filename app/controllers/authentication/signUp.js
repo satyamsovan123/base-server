@@ -40,7 +40,7 @@ const signUp = async (req, res) => {
     );
     logger(`CONTROLLERS / SIGNUP - User signed up successfully`);
     return res
-      .cookie(serverConstant.AUTHORIZATION_HEADER_KEY, `Bearer ${token}`, {
+      .cookie(serverConstant.AUTHORIZATION_HEADER_KEY, `Bearer-${token}`, {
         httpOnly: true,
         secure: true,
         sameSite: "none",

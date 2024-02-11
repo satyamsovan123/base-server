@@ -3,10 +3,11 @@ const router = express.Router();
 const { responseBuilder } = require("../../utils/responseBuilder");
 const { serverConstant, statusCodeConstant } = require("../../constants/");
 const { logger } = require("../../utils");
+const { rateLimiter } = require("../middlewares");
 
 const baseURL = serverConstant.BASE_API;
 router.use(baseURL, require("./authentication"));
-router.use(baseURL, require("./data"));
+router.use(baseURL, rateLimiter, require("./data"));
 
 router.get("/", (req, res) => {
   try {

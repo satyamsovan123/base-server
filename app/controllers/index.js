@@ -11,6 +11,7 @@ const { updateData } = require("./data/updateData");
 const {
   processOTPVerification,
 } = require("./authentication/utils/processOTPVerification");
+const { signOut } = require("./authentication/signOut");
 
 module.exports = {
   signUp,
@@ -23,4 +24,5 @@ module.exports = {
   deleteDataById,
   updateData,
   processOTPVerification,
+  signOut,
 };

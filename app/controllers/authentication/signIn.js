@@ -46,7 +46,7 @@ const signIn = async (req, res) => {
     logger(`CONTROLLERS / SIGNIN - User signed in successfully`);
 
     return res
-      .cookie(serverConstant.AUTHORIZATION_HEADER_KEY, `Bearer ${token}`, {
+      .cookie(serverConstant.AUTHORIZATION_HEADER_KEY, `Bearer-${token}`, {
         httpOnly: true,
         secure: true,
         sameSite: "none",
