@@ -3,11 +3,17 @@ const router = express.Router();
 const { responseBuilder } = require("../../utils/responseBuilder");
 const { serverConstant, statusCodeConstant } = require("../../constants/");
 const { logger } = require("../../utils");
+const { appConfig } = require("../../configs/appConfig");
 const { rateLimiter } = require("../middlewares");
 
 const baseURL = serverConstant.BASE_API;
 router.use(baseURL, require("./authentication"));
-router.use(baseURL, rateLimiter, require("./data"));
+
+if (appConfig.useRateLimiter) {
+  router.use(baseURL, rateLimiter, require("./data"));
+} else {
+  router.use(baseURL, require("./data"));
+}
 
 router.get("/", (req, res) => {
   try {

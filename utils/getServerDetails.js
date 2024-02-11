@@ -17,11 +17,13 @@ async function getServerDetails() {
   const frontendURL = appConfig.frontendURL;
   const backendURL = appConfig.backendURL;
   const appVersion = appConfig.appVersion;
+  const useRateLimiter = appConfig.useRateLimiter;
 
   const messages = [
     `Name - ${appName}`,
     `Status - Server is running on port ${port} in ${environment} environment.`,
     `Using database - ${databaseName}`,
+    `Rate limiter - ${useRateLimiter ? "Enabled" : "Disabled"}`,
     `Frontend URL - ${frontendURL}`,
     `Backend URL - ${backendURL}`,
     `Version - ${appVersion}`,

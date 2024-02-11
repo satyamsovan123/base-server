@@ -3,15 +3,13 @@ const { logger } = require("../../utils");
 const { responseConstant, statusCodeConstant } = require("../../constants");
 const { responseBuilder } = require("../../utils/responseBuilder");
 
+logger(`MIDDLEWARES / RATELIMITER - Inside rate limiter`);
 const rateLimiterConfig = {
   windowMs: 1 * 60 * 1000, // 1 minute
-  max: 50, // Limit each IP to 50 requests per 1 minute
+  max: 2, // Limit each IP to 50 requests per 1 minute
   message: responseConstant.TOO_MANY_REQUESTS,
   handler: (req, res, next) => {
     if (req.rateLimit.remaining === 0) {
-      logger(
-        `MIDDLEWARES / RATELIMITER - Rate limit reached for IP - ${req.ip}`
-      );
       const generatedResponse = responseBuilder(
         {},
         responseConstant.TOO_MANY_REQUESTS,
