@@ -1,6 +1,8 @@
 const { appConfig } = require("./configs/appConfig");
 global.appConfig = appConfig;
 const cookieParser = require("cookie-parser");
+const compression = require("compression");
+const helmet = require("helmet");
 
 const express = require("express");
 const cors = require("cors");
@@ -9,7 +11,7 @@ const {
   disconnectFromDB,
   checkDBConnection,
 } = require("./utils/database");
-const { scheduler } = require("./utils/scheduler");
+const { runScheduler } = require("./utils/runScheduler");
 const { serverConstant } = require("./constants/serverConstant");
 const app = express();
 const routes = require("./app/routes");
@@ -17,7 +19,10 @@ const routes = require("./app/routes");
 const webFrontendURL = appConfig.frontendURL;
 
 app.use(express.static("public/base-server-ui"));
+
 app.use(cookieParser());
+
+app.use(helmet());
 
 app.use(
   cors({
@@ -29,6 +34,8 @@ app.use(
 );
 
 app.use(express.json());
+
+app.use(compression());
 
 app.use(routes);
 
@@ -48,5 +55,5 @@ process.on("uncaughtException", async (error) => {
 
 app.listen(appConfig.port, async () => {
   await connectToDB();
-  scheduler();
+  runScheduler();
 });

@@ -15,7 +15,6 @@ const {
 module.exports = {
   signUp,
   signIn,
-
   getUserDataById,
   getAllUserData,
   getAllData,

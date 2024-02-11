@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const trimRequest = require("trim-request");
+
 const {
   getUserDataById,
   getAllUserData,
@@ -20,15 +22,34 @@ const { addData } = require("../controllers/data/addData");
 
 router.post(
   "/getuserdatabyid",
+  trimRequest.all,
   verifyJWT,
   verifyGetByIdRequest,
   getUserDataById
 );
-router.get("/getalluserdata", verifyJWT, getAllUserData);
-router.get("/getallData", getAllData);
-router.post("/adddata", verifyJWT, verifyAddDataRequest, addData);
-router.put("/updatedata", verifyJWT, verifyUpdateDataRequest, updateData);
-router.post("/deletedatabyid", verifyJWT, verifyGetByIdRequest, deleteDataById);
-router.delete("/deletealldata", verifyJWT, deleteAllData);
+router.get("/getalluserdata", trimRequest.all, verifyJWT, getAllUserData);
+router.get("/getallData", trimRequest.all, getAllData);
+router.post(
+  "/adddata",
+  trimRequest.all,
+  verifyJWT,
+  verifyAddDataRequest,
+  addData
+);
+router.put(
+  "/updatedata",
+  trimRequest.all,
+  verifyJWT,
+  verifyUpdateDataRequest,
+  updateData
+);
+router.post(
+  "/deletedatabyid",
+  trimRequest.all,
+  verifyJWT,
+  verifyGetByIdRequest,
+  deleteDataById
+);
+router.delete("/deletealldata", trimRequest.all, verifyJWT, deleteAllData);
 
 module.exports = router;

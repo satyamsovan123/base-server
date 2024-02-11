@@ -12,7 +12,7 @@ const {
 } = require("./encryptionDecryption");
 
 const { checkDBConnection } = require("./database");
-const { scheduler } = require("./scheduler");
+const { runScheduler } = require("./runScheduler");
 
 module.exports = {
   logger,
@@ -24,6 +24,6 @@ module.exports = {
   sendOTP,
   verifyOTP,
   checkDBConnection,
-  scheduler,
+  runScheduler,
   generateJWT,
 };
