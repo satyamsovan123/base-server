@@ -43,6 +43,8 @@ app.use(compression());
 
 app.use(routes);
 
+app.set("trust proxy", 1); // For express-rate-limit to work, as Heroku would be acting like proxy - https://stackoverflow.com/questions/62494060/express-rate-limit-not-working-when-deployed-to-heroku
+
 process.on("SIGINT", async () => {
   await disconnectFromDB();
   process.exit(0);
