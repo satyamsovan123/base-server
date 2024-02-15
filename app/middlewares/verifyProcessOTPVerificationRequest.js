@@ -6,11 +6,13 @@ const { ProcessOTPVerificationValidator } = require("../validators");
 
 const verifyProcessOTPVerificationRequest = async (req, res, next) => {
   logger(
+    `INFO`,
     `MIDDLEWARES / VERIFYPROCESSOTPREQUEST - Inside verify process OTP request`
   );
   try {
     const userData = req.body;
     logger(
+      `INFO`,
       `MIDDLEWARES / VERIFYPROCESSOTPREQUEST - Request body - ${JSON.stringify(
         userData
       )}`
@@ -19,6 +21,7 @@ const verifyProcessOTPVerificationRequest = async (req, res, next) => {
       userData
     ).getValidationResult();
     logger(
+      `INFO`,
       `MIDDLEWARES / VERIFYPROCESSOTPREQUEST - Data validation result - ${
         dataValidationResult || null
       }`
@@ -40,6 +43,7 @@ const verifyProcessOTPVerificationRequest = async (req, res, next) => {
       statusCodeConstant.ERROR
     );
     logger(
+      `ERROR`,
       `MIDDLEWARES / VERIFYPROCESSOTPREQUEST - Error while verifying add data request \n Error - ${error}`
     );
     return res.status(generatedResponse.code).send(generatedResponse);

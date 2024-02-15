@@ -1,6 +1,7 @@
 const { appConfig } = require("../configs/appConfig");
 const path = require("path");
 const fs = require("fs");
+const { DateTime } = require("luxon");
 
 const logsFolderPath = path.join(__dirname, "../logs");
 if (!fs.existsSync(logsFolderPath)) {
@@ -18,11 +19,13 @@ const logFilePath =
     ? productionLogFilePath
     : developmentLogFilePath;
 
-function logger(data) {
-  const sanitizedData = `${new Date()} - ${data} \n`;
+function logger(type, data) {
+  const sanitizedData = `${DateTime.now().toLocaleString(
+    DateTime.DATETIME_MED_WITH_SECONDS
+  )} - ${type} - ${data} \n`;
 
   // if (appConfig.environment === "development") console.log(data);
-  console.log(data);
+  console.log(`${type} - ${data} \n`);
 
   fs.writeFile(logFilePath, sanitizedData, { flag: "a+" }, (error) => {
     if (error) {

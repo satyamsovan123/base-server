@@ -4,17 +4,18 @@ const { logger } = require("./logger");
 require("dotenv").config();
 
 async function connectToDB() {
-  logger(`UTILS / CONNECTTODB - Inside connect to DB`);
+  logger(`INFO`, `UTILS / CONNECTTODB - Inside connect to DB`);
   const url = appConfig.databaseURL;
   const options = { useNewUrlParser: true, useUnifiedTopology: true };
 
   mongoose.connect(url, options).then(
     () => {
-      logger(`UTILS / CONNECTTODB - Connected to DB`);
+      logger(`INFO`, `UTILS / CONNECTTODB - Connected to DB`);
       getServerDetails();
     },
     (error) => {
       logger(
+        `ERROR`,
         `UTILS / CONNECTTODB - Error while connecting to DB \n Error - ${error}`
       );
       process.exit(1);
@@ -23,21 +24,22 @@ async function connectToDB() {
 }
 
 async function disconnectFromDB() {
-  logger(`UTILS / DISCONNECTFROMDB - Inside disconnect from DB`);
+  logger(`INFO`, `UTILS / DISCONNECTFROMDB - Inside disconnect from DB`);
   await mongoose.disconnect();
 }
 
 const checkDBConnection = () => {
-  logger(`UTILS / CHECKDBCONNECTION - Inside check DB connection`);
+  logger(`INFO`, `UTILS / CHECKDBCONNECTION - Inside check DB connection`);
   if (mongoose.connection.readyState !== 1) {
     logger(
+      `INFO`,
       `UTILS / CHECKDBCONNECTION - ${
         mongoose.connection.readyState === 1 ? "Connected" : "Not connected"
       }`
     );
     return true;
   } else {
-    logger(`UTILS / CHECKDBCONNECTION - Not connected to DB`);
+    logger(`ERROR`, `UTILS / CHECKDBCONNECTION - Not connected to DB`);
     return false;
   }
 };

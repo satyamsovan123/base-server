@@ -6,10 +6,12 @@ const { UpdateDataValidator } = require("../validators");
 const verifyUpdateDataRequest = async (req, res, next) => {
   try {
     logger(
+      `INFO`,
       `MIDDLEWARES / VERIFYUPDATEDATAREQUEST - Inside verify update data request`
     );
     const userData = req.body;
     logger(
+      `INFO`,
       `MIDDLEWARES / VERIFYUPDATEDATAREQUEST - Request body - ${JSON.stringify(
         userData
       )}`
@@ -18,6 +20,7 @@ const verifyUpdateDataRequest = async (req, res, next) => {
       userData
     ).getValidationResult();
     logger(
+      `INFO`,
       `MIDDLEWARES / VERIFYUPDATEDATAREQUEST - Data validation result - ${
         dataValidationResult || null
       }`
@@ -39,6 +42,7 @@ const verifyUpdateDataRequest = async (req, res, next) => {
       statusCodeConstant.ERROR
     );
     logger(
+      `ERROR`,
       `MIDDLEWARES / VERIFYJWT - Error while verifying update data request \n Error - ${error}`
     );
     return res.status(generatedResponse.code).send(generatedResponse);

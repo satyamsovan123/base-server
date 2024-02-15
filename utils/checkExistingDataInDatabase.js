@@ -3,20 +3,24 @@ const { User } = require("../app/models");
 const { logger } = require("./logger");
 
 const checkExistingData = async (title, email) => {
-  logger(`UTILS / CHECKEXISTINGDATA - Inside check existing data`);
+  logger(`INFO`, `UTILS / CHECKEXISTINGDATA - Inside check existing data`);
   let cursorData = null;
   if (!email || !title) {
+    logger(`INFO`, `UTILS / CHECKEXISTINGDATA - Email or title not provided`);
     return cursorData;
-    logger(`UTILS / CHECKEXISTINGDATA - Email or title not provided`);
   }
   await Data.findOne({ email: email, title: title })
     .select("title article _id")
     .then((result) => {
       cursorData = result;
-      logger(`UTILS / CHECKEXISTINGDATA - Found existing data - ${cursorData}`);
+      logger(
+        `INFO`,
+        `UTILS / CHECKEXISTINGDATA - Found existing data - ${cursorData}`
+      );
     })
     .catch((error) => {
       logger(
+        `ERROR`,
         `UTILS / CHECKEXISTINGDATA - Error while checking existing data \n Error - ${error}`
       );
       cursorData = null;
@@ -26,10 +30,10 @@ const checkExistingData = async (title, email) => {
 };
 
 const checkExistingUser = async (email) => {
-  logger(`UTILS / CHECKEXISTINGUSER - Inside check existing user`);
+  logger(`INFO`, `UTILS / CHECKEXISTINGUSER - Inside check existing user`);
   let cursorData = null;
   if (!email) {
-    logger(`UTILS / CHECKEXISTINGUSER - Email not provided`);
+    logger(`INFO`, `UTILS / CHECKEXISTINGUSER - Email not provided`);
     return cursorData;
   }
   await User.findOne({ email: email })
@@ -37,11 +41,13 @@ const checkExistingUser = async (email) => {
     .then((result) => {
       cursorData = result;
       logger(
+        `INFO`,
         `UTILS / CHECKEXISTINGUSER - Found existing user - ${cursorData?.email}`
       );
     })
     .catch((error) => {
       logger(
+        `ERROR`,
         `UTILS / CHECKEXISTINGUSER - Error while checking existing user \n Error - ${error}`
       );
       cursorData = null;

@@ -10,9 +10,12 @@ const { User } = require("../../../models");
 
 const processOTPVerification = async (req, res) => {
   try {
-    logger(`CONTROLLERS / PROCESSOTPVERIFICATION - Inside process OTP`);
+    logger(`INFO`, `CONTROLLERS / PROCESSOTPVERIFICATION - Inside process OTP`);
     const userData = req.body;
-    logger(`CONTROLLERS / PROCESSOTPVERIFICATION - User - ${userData.email}`);
+    logger(
+      `INFO`,
+      `CONTROLLERS / PROCESSOTPVERIFICATION - User - ${userData.email}`
+    );
 
     const otpVerified = await verifyOTP(userData.email, userData.otp);
 
@@ -22,7 +25,10 @@ const processOTPVerification = async (req, res) => {
         responseConstant.OTP_NOT_VERIFIED,
         statusCodeConstant.INVALID
       );
-      logger(`CONTROLLERS / PROCESSOTPVERIFICATION - OTP is wrong or expired`);
+      logger(
+        `INFO`,
+        `CONTROLLERS / PROCESSOTPVERIFICATION - OTP is wrong or expired`
+      );
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
@@ -39,12 +45,14 @@ const processOTPVerification = async (req, res) => {
         statusCodeConstant.ERROR
       );
       logger(
+        `INFO`,
         `CONTROLLERS / PROCESSOTPVERIFICATION - Error while updating user - ${userData.email}`
       );
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
     logger(
+      `INFO`,
       `CONTROLLERS / PROCESSOTPVERIFICATION - User email verified with OTP successfully and user updated`
     );
 
@@ -61,6 +69,7 @@ const processOTPVerification = async (req, res) => {
       statusCodeConstant.ERROR
     );
     logger(
+      `ERROR`,
       `CONTROLLERS / PROCESSOTPVERIFICATION - Error while verifying / processing OTP - ${userData.email} \n Error - ${error}`
     );
     return res.status(generatedResponse.code).send(generatedResponse);

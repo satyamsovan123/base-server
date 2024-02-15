@@ -52,7 +52,7 @@ router.get("/test", (req, res) => {
       return res.status(generatedResponse.code).send(generatedResponse);
     }
   } catch (error) {
-    logger(`ROUTES / TEST - Error while testing \n Error - ${error}`);
+    logger(`ERROR`, `ROUTES / TEST - Error while testing \n Error - ${error}`);
     let generatedResponse = responseBuilder();
     return res.status(generatedResponse.code).send(generatedResponse);
   }
@@ -65,6 +65,7 @@ router.get("/web", (req, res) => {
     });
   } catch (error) {
     logger(
+      `ERROR`,
       `ROUTES / WEBPAGE - Error while testing web page \n Error - ${error}`
     );
     let generatedResponse = responseBuilder();

@@ -5,9 +5,10 @@ const { Data } = require("../../models");
 
 const addData = async (req, res) => {
   try {
-    logger(`CONTROLLERS / ADDDATA - Inside add data`);
+    logger(`INFO`, `CONTROLLERS / ADDDATA - Inside add data`);
     const userData = req.body;
     logger(
+      `INFO`,
       `CONTROLLERS / ADDDATA - Request body - ${JSON.stringify(userData)}`
     );
     const newData = await Data.create(
@@ -24,18 +25,18 @@ const addData = async (req, res) => {
         responseConstant.ADD_DATA_ERROR,
         statusCodeConstant.ERROR
       );
-      logger(`CONTROLLERS / ADDDATA - Unable to create new data`);
+      logger(`INFO`, `CONTROLLERS / ADDDATA - Unable to create new data`);
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
-    logger(`CONTROLLERS / ADDDATA - Created new data`);
+    logger(`INFO`, `CONTROLLERS / ADDDATA - Created new data`);
     const generatedResponse = responseBuilder(
       { title: newData.title, article: newData.article, id: newData._id },
       responseConstant.ADD_DATA_SUCCESS,
       statusCodeConstant.SUCCESS
     );
 
-    logger(`CONTROLLERS / ADDDATA - Data added successfully`);
+    logger(`INFO`, `CONTROLLERS / ADDDATA - Data added successfully`);
     return res.status(generatedResponse.code).send(generatedResponse);
   } catch (error) {
     const generatedResponse = responseBuilder(
@@ -44,6 +45,7 @@ const addData = async (req, res) => {
       statusCodeConstant.ERROR
     );
     logger(
+      `ERROR`,
       `CONTROLLERS / ADDDATA - Error while adding data \n Error - ${error}`
     );
     return res.status(generatedResponse.code).send(generatedResponse);

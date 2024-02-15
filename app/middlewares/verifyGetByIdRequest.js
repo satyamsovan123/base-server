@@ -6,9 +6,13 @@ const { GetByIdValidator } = require("../validators");
 
 const verifyGetByIdRequest = async (req, res, next) => {
   try {
-    logger(`MIDDLEWARES / GETBYIDREQUEST - Inside verify get by id request`);
+    logger(
+      `INFO`,
+      `MIDDLEWARES / GETBYIDREQUEST - Inside verify get by id request`
+    );
     const userData = req.body;
     logger(
+      `INFO`,
       `MIDDLEWARES / GETBYIDREQUEST - Request body - ${JSON.stringify(
         userData
       )}`
@@ -17,6 +21,7 @@ const verifyGetByIdRequest = async (req, res, next) => {
       userData
     ).getValidationResult();
     logger(
+      `INFO`,
       `MIDDLEWARES / GETBYIDREQUEST - Data validation result - ${
         dataValidationResult || null
       }`
@@ -39,6 +44,7 @@ const verifyGetByIdRequest = async (req, res, next) => {
       statusCodeConstant.ERROR
     );
     logger(
+      `ERROR`,
       `MIDDLEWARERS / GETBYIDREQUEST - Error while verifying get by id request \n Error - ${error}`
     );
     return res.status(generatedResponse.code).send(generatedResponse);

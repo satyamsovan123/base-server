@@ -19,7 +19,7 @@ class ResponseBuilder {
 }
 
 function responseBuilder(data, message, code) {
-  logger(`UTILS / RESPONSEBUILDER - Inside response builder`);
+  logger(`INFO`, `UTILS / RESPONSEBUILDER - Inside response builder`);
   return new ResponseBuilder(data, message, code).build();
 }
 

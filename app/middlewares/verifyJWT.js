@@ -6,19 +6,19 @@ const jwt = require("jsonwebtoken");
 
 const verifyJWT = async (req, res, next) => {
   try {
-    logger(`MIDDLEWARES / VERIFYJWT - Inside verify JWT`);
+    logger(`INFO`, `MIDDLEWARES / VERIFYJWT - Inside verify JWT`);
     const tokenFromHeader = req.headers?.authorization?.split(" ")[1];
     const tokenFromCookies = req.cookies;
     if (tokenFromCookies) {
-      logger(`MIDDLEWARES / VERIFYJWT - Token from cookies`);
+      logger(`INFO`, `MIDDLEWARES / VERIFYJWT - Token from cookies`);
     }
     if (tokenFromHeader) {
-      logger(`MIDDLEWARES / VERIFYJWT - Token from header`);
+      logger(`INFO`, `MIDDLEWARES / VERIFYJWT - Token from header`);
     }
     const token = tokenFromHeader || tokenFromCookies;
 
     const decodedData = jwt.verify(token, appConfig.jwtSecret);
-    logger(`MIDDLEWARES / VERIFYJWT - JWT verified`);
+    logger(`INFO`, `MIDDLEWARES / VERIFYJWT - JWT verified`);
     const existingUser = await checkExistingUser(decodedData?.email);
     // existingUser.email = "testuser@email.com";
     if (decodedData?.email !== existingUser?.email) {
@@ -28,13 +28,14 @@ const verifyJWT = async (req, res, next) => {
         statusCodeConstant.UNAUTHORIZED
       );
       logger(
+        `INFO`,
         `MIDDLEWARES / VERIFYJWT - Decoded JWT email does not match with existing user email`
       );
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
     if (!existingUser.isVerified) {
-      logger(`MIDDLEWARES / VERIFYJWT - User email is not verified`);
+      logger(`INFO`, `MIDDLEWARES / VERIFYJWT - User email is not verified`);
       const otpSent = await sendOTP(existingUser.email);
 
       if (!otpSent) {
@@ -43,10 +44,10 @@ const verifyJWT = async (req, res, next) => {
           responseConstant.UNABLE_TO_SEND_OTP,
           statusCodeConstant.ERROR
         );
-        logger(`MIDDLEWARES / VERIFYJWT - Error while sending OTP`);
+        logger(`INFO`, `MIDDLEWARES / VERIFYJWT - Error while sending OTP`);
         return res.status(generatedResponse.code).send(generatedResponse);
       }
-      logger(`MIDDLEWARES / VERIFYJWT - OTP sent successfully`);
+      logger(`INFO`, `MIDDLEWARES / VERIFYJWT - OTP sent successfully`);
       const generatedResponse = responseBuilder(
         {},
         responseConstant.OTP_NOT_VERIFIED,
@@ -54,7 +55,7 @@ const verifyJWT = async (req, res, next) => {
       );
       return res.status(generatedResponse.code).send(generatedResponse);
     } else {
-      logger(`MIDDLEWARES / VERIFYJWT - User is verified`);
+      logger(`INFO`, `MIDDLEWARES / VERIFYJWT - User is verified`);
       req.body["email"] = decodedData?.email;
       // req.body["email"] = "testuser@email.com";
       next();
@@ -66,6 +67,7 @@ const verifyJWT = async (req, res, next) => {
       statusCodeConstant.UNAUTHORIZED
     );
     logger(
+      `ERROR`,
       `MIDDLEWARES / VERIFYJWT - Error while verifying JWT \n Error - ${error}`
     );
     return res.status(generatedResponse.code).send(generatedResponse);

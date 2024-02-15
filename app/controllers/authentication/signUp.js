@@ -10,10 +10,10 @@ const { excryptPlainText, generateJWT, sendOTP } = require("../../../utils");
 
 const signUp = async (req, res) => {
   try {
-    logger(`CONTROLLERS / SIGNUP - Inside sign up`);
+    logger(`INFO`, `CONTROLLERS / SIGNUP - Inside sign up`);
 
     const userData = req.body;
-    logger(`CONTROLLERS / SIGNUP - User - ${userData.email}`);
+    logger(`INFO`, `CONTROLLERS / SIGNUP - User - ${userData.email}`);
     const encryptedPassword = await excryptPlainText(userData.password);
     const newUser = new User({
       email: userData.email,
@@ -21,7 +21,7 @@ const signUp = async (req, res) => {
     });
 
     await User.create(newUser);
-    logger(`CONTROLLERS / SIGNUP - User created`);
+    logger(`INFO`, `CONTROLLERS / SIGNUP - User created`);
 
     const token = await generateJWT({ email: userData.email });
     if (!token) {
@@ -30,7 +30,7 @@ const signUp = async (req, res) => {
         responseConstant.SIGN_IN_ERROR,
         statusCodeConstant.ERROR
       );
-      logger(`CONTROLLERS / SIGNIN - Error while generating JWT`);
+      logger(`INFO`, `CONTROLLERS / SIGNIN - Error while generating JWT`);
       return res.status(generatedResponse.code).send(generatedResponse);
     }
     const generatedResponse = responseBuilder(
@@ -38,7 +38,7 @@ const signUp = async (req, res) => {
       responseConstant.SIGN_UP_SUCCESS,
       statusCodeConstant.SUCCESS
     );
-    logger(`CONTROLLERS / SIGNUP - User signed up successfully`);
+    logger(`INFO`, `CONTROLLERS / SIGNUP - User signed up successfully`);
     return res
       .cookie(serverConstant.AUTHORIZATION_HEADER_KEY, `Bearer-${token}`, {
         httpOnly: true,
@@ -56,7 +56,10 @@ const signUp = async (req, res) => {
       responseConstant.SIGN_UP_ERROR,
       statusCodeConstant.ERROR
     );
-    logger(`CONTROLLERS / SIGNUP - Error while signing up \n Error - ${error}`);
+    logger(
+      `ERROR`,
+      `CONTROLLERS / SIGNUP - Error while signing up \n Error - ${error}`
+    );
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

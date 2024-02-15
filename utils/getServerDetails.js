@@ -9,7 +9,7 @@ async function getServerDetails() {
   const minorVersion = data.split("\n")[1].split("=")[1];
   appConfig.appVersion = `${majorVersion}.${minorVersion}`;
 
-  logger(`UTILS / GETSERVERDETAILS - Inside get server details`);
+  logger(`INFO`, `UTILS / GETSERVERDETAILS - Inside get server details`);
   const environment = appConfig.environment;
   const port = appConfig.port;
   const databaseName = appConfig.databaseName;

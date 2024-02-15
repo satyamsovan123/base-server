@@ -10,10 +10,10 @@ const { compareEncryptedText, generateJWT } = require("../../../utils");
 
 const signIn = async (req, res) => {
   try {
-    logger(`CONTROLLERS / SIGNIN - Inside sign in`);
+    logger(`INFO`, `CONTROLLERS / SIGNIN - Inside sign in`);
 
     const userData = req.body;
-    logger(`CONTROLLERS / SIGNIN - User - ${userData.email}`);
+    logger(`INFO`, `CONTROLLERS / SIGNIN - User - ${userData.email}`);
     const isPasswordValid = await compareEncryptedText(
       userData.password,
       userData.hashedPassword
@@ -24,10 +24,10 @@ const signIn = async (req, res) => {
         responseConstant.PROVIDE_VALID_CREDENTIALS,
         statusCodeConstant.UNAUTHORIZED
       );
-      logger(`CONTROLLERS / SIGNIN - Password is not valid`);
+      logger(`INFO`, `CONTROLLERS / SIGNIN - Password is not valid`);
       return res.status(generatedResponse.code).send(generatedResponse);
     }
-    logger(`CONTROLLERS / SIGNIN - Password is valid`);
+    logger(`INFO`, `CONTROLLERS / SIGNIN - Password is valid`);
     const token = await generateJWT({ email: userData.email });
     if (!token) {
       const generatedResponse = responseBuilder(
@@ -35,7 +35,7 @@ const signIn = async (req, res) => {
         responseConstant.SIGN_IN_ERROR,
         statusCodeConstant.ERROR
       );
-      logger(`CONTROLLERS / SIGNIN - Error while generating JWT`);
+      logger(`INFO`, `CONTROLLERS / SIGNIN - Error while generating JWT`);
       return res.status(generatedResponse.code).send(generatedResponse);
     }
     const generatedResponse = responseBuilder(
@@ -43,7 +43,7 @@ const signIn = async (req, res) => {
       responseConstant.SIGN_IN_SUCCESS,
       statusCodeConstant.SUCCESS
     );
-    logger(`CONTROLLERS / SIGNIN - User signed in successfully`);
+    logger(`INFO`, `CONTROLLERS / SIGNIN - User signed in successfully`);
 
     return res
       .cookie(serverConstant.AUTHORIZATION_HEADER_KEY, `Bearer-${token}`, {
@@ -62,7 +62,10 @@ const signIn = async (req, res) => {
       responseConstant.SIGN_IN_ERROR,
       statusCodeConstant.ERROR
     );
-    logger(`CONTROLLERS / SIGNIN - Error while signing in \n Error - ${error}`);
+    logger(
+      `ERROR`,
+      `CONTROLLERS / SIGNIN - Error while signing in \n Error - ${error}`
+    );
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

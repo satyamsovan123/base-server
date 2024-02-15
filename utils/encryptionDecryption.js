@@ -4,9 +4,15 @@ const { logger } = require("./logger");
 const saltRounds = Number(appConfig.saltRounds);
 
 const compareEncryptedText = async (plainText, hash) => {
-  logger(`UTILS / COMPAREENCRYPTEDTEXT - Inside compare encrypted text`);
+  logger(
+    `INFO`,
+    `UTILS / COMPAREENCRYPTEDTEXT - Inside compare encrypted text`
+  );
   if (!plainText || !hash) {
-    logger(`UTILS / COMPAREENCRYPTEDTEXT - Plain text or hash not provided`);
+    logger(
+      `INFO`,
+      `UTILS / COMPAREENCRYPTEDTEXT - Plain text or hash not provided`
+    );
     return false;
   }
   try {
@@ -14,6 +20,7 @@ const compareEncryptedText = async (plainText, hash) => {
     return result;
   } catch (error) {
     logger(
+      `ERROR`,
       `UTILS / COMPAREENCRYPTEDTEXT - Error while comparing encrypted text \n Error - ${error}`
     );
     return false;
@@ -21,9 +28,9 @@ const compareEncryptedText = async (plainText, hash) => {
 };
 
 const excryptPlainText = async (plainText) => {
-  logger(`UTILS / ENCRPYPTPLAINTEXT - Inside encrypt plain text`);
+  logger(`INFO`, `UTILS / ENCRPYPTPLAINTEXT - Inside encrypt plain text`);
   if (!plainText) {
-    logger(`UTILS / ENCRPYPTPLAINTEXT - Plain text not provided`);
+    logger(`INFO`, `UTILS / ENCRPYPTPLAINTEXT - Plain text not provided`);
     return "";
   }
   try {
@@ -31,6 +38,7 @@ const excryptPlainText = async (plainText) => {
     return encryptedText;
   } catch (error) {
     logger(
+      `ERROR`,
       `UTILS / ENCRPYPTPLAINTEXT - Error while encrypting plain text \n Error - ${error}`
     );
     return "";

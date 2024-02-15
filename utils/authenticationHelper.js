@@ -7,7 +7,7 @@ const { statusCodeConstant } = require("../constants");
 const { excryptPlainText } = require("./encryptionDecryption");
 
 const generateJWT = async (data) => {
-  logger(`UTILS / GENERATEJWT - Inside generate JWT`);
+  logger(`INFO`, `UTILS / GENERATEJWT - Inside generate JWT`);
   if (!data) {
     return "";
   }
@@ -16,10 +16,14 @@ const generateJWT = async (data) => {
       expiresIn: appConfig.jwtExpiresIn,
     });
 
-    logger(`UTILS / GENERATEJWT - JWT generated for ${JSON.stringify(data)}`);
+    logger(
+      `INFO`,
+      `UTILS / GENERATEJWT - JWT generated for ${JSON.stringify(data)}`
+    );
     return token;
   } catch (error) {
     logger(
+      `ERROR`,
       `UTILS / GENERATEJWT - Error while generating JWT \n Error - ${error}`
     );
     return "";
@@ -27,7 +31,7 @@ const generateJWT = async (data) => {
 };
 
 const sendOTP = async (email) => {
-  logger(`UTILS / SENDOTP - Inside send OTP`);
+  logger(`INFO`, `UTILS / SENDOTP - Inside send OTP`);
   try {
     const postData = {
       sender: appConfig.emailServerUsername,
@@ -38,9 +42,13 @@ const sendOTP = async (email) => {
       "email-server-api-key": appConfig.emailServerAPIKey,
     };
     const apiUrl = `${appConfig.emailServer}${serverConstant.SEND_OTP}`;
-    logger(`UTILS / SENDOTP - Email details - ${JSON.stringify(postData)}`);
+    logger(
+      `INFO`,
+      `UTILS / SENDOTP - Email details - ${JSON.stringify(postData)}`
+    );
     const response = await axios.post(apiUrl, postData, { headers });
     logger(
+      `INFO`,
       `UTILS / SENDOTP - Response from email server - ${JSON.stringify(
         response.data
       )}`
@@ -48,14 +56,17 @@ const sendOTP = async (email) => {
 
     return response.data.code === statusCodeConstant.SUCCESS;
   } catch (error) {
-    logger(`UTILS / SENDOTP - Error while sending OTP \n Error - ${error}`);
+    logger(
+      `ERROR`,
+      `UTILS / SENDOTP - Error while sending OTP \n Error - ${error}`
+    );
     return false;
   }
 };
 
 const verifyOTP = async (email, otp) => {
   try {
-    logger(`UTILS / VERIFYOTP - Inside verify OTP`);
+    logger(`INFO`, `UTILS / VERIFYOTP - Inside verify OTP`);
     const postData = {
       sender: appConfig.emailServerUsername,
       receiver: email,
@@ -66,16 +77,23 @@ const verifyOTP = async (email, otp) => {
       "email-server-api-key": appConfig.emailServerAPIKey,
     };
     const apiUrl = `${appConfig.emailServer}${serverConstant.VERIFY_OTP}`;
-    logger(`UTILS / VERIFYOTP - Email details - ${JSON.stringify(postData)}`);
+    logger(
+      `INFO`,
+      `UTILS / VERIFYOTP - Email details - ${JSON.stringify(postData)}`
+    );
     const response = await axios.post(apiUrl, postData, { headers });
     logger(
+      `INFO`,
       `UTILS / VERIFYOTP - Response from email server - ${JSON.stringify(
         response.data
       )}`
     );
     return response.data.code === statusCodeConstant.SUCCESS;
   } catch (error) {
-    logger(`UTILS / VERIFYOTP - Error while verifying OTP \n Error - ${error}`);
+    logger(
+      `ERROR`,
+      `UTILS / VERIFYOTP - Error while verifying OTP \n Error - ${error}`
+    );
     return false;
   }
 };

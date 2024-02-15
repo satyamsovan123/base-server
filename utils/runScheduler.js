@@ -5,7 +5,7 @@ const { Data } = require("../app/models");
 const { appConfig } = require("../configs/appConfig");
 
 async function runScheduler() {
-  logger(`UTILS / RUNSCHEDULER - Inside run scheduler`);
+  logger(`INFO`, `UTILS / RUNSCHEDULER - Inside run scheduler`);
   // 0 30 08 * * * - At 08:30:00 AM every day
   // */10 * * * * - Every 10 minutes
   cron.schedule(appConfig.cronJobFrequency, async () => {
@@ -13,6 +13,7 @@ async function runScheduler() {
     const randomData = allData[Math.floor(Math.random() * allData.length)];
 
     logger(
+      `INFO`,
       `UTILS / RUNSCHEDULER - Inside cron job that runs every day at 08:30:00 AM`
     );
     // await sendCampaignEmail(

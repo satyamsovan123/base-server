@@ -17,6 +17,7 @@ const { runScheduler } = require("./utils/runScheduler");
 const { serverConstant } = require("./constants/serverConstant");
 const app = express();
 const routes = require("./app/routes");
+const { logger } = require("./utils");
 
 const webFrontendURL = appConfig.frontendURL;
 
@@ -56,6 +57,7 @@ process.on("SIGTERM", async () => {
 process.on("uncaughtException", async (error) => {
   await disconnectFromDB();
   console.error("Uncaught exception: ", error);
+  logger(`ERROR`, `APP - UNCAUGHTEXCEPTION \n Error - ${error}`);
   process.exit(1);
 });
 

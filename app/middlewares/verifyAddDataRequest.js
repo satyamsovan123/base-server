@@ -5,10 +5,14 @@ const { checkExistingData } = require("../../utils");
 const { AddDataValidator } = require("../validators");
 
 const verifyAddDataRequest = async (req, res, next) => {
-  logger(`MIDDLEWARES / VERIFYADDDATAREQUEST - Inside verify add data request`);
+  logger(
+    `INFO`,
+    `MIDDLEWARES / VERIFYADDDATAREQUEST - Inside verify add data request`
+  );
   try {
     const userData = req.body;
     logger(
+      `INFO`,
       `MIDDLEWARES / VERIFYADDDATAREQUEST - Request body - ${JSON.stringify(
         userData
       )}`
@@ -17,6 +21,7 @@ const verifyAddDataRequest = async (req, res, next) => {
       userData
     ).getValidationResult();
     logger(
+      `INFO`,
       `MIDDLEWARES / VERIFYADDDATAREQUEST - Data validation result - ${
         dataValidationResult || null
       }`
@@ -40,7 +45,10 @@ const verifyAddDataRequest = async (req, res, next) => {
         responseConstant.DATA_ALREADY_EXISTS,
         statusCodeConstant.ALREADY_EXISTS
       );
-      logger(`MIDDLEWARES / VERIFYADDDATAREQUEST - Data already exists`);
+      logger(
+        `INFO`,
+        `MIDDLEWARES / VERIFYADDDATAREQUEST - Data already exists`
+      );
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
@@ -52,6 +60,7 @@ const verifyAddDataRequest = async (req, res, next) => {
       statusCodeConstant.ERROR
     );
     logger(
+      `ERROR`,
       `MIDDLEWARES / VERIFYADDDATAREQUEST - Error while verifying add data request \n Error - ${error}`
     );
     return res.status(generatedResponse.code).send(generatedResponse);

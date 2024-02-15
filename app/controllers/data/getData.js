@@ -6,10 +6,14 @@ const { paginationConfig } = require("../../../configs/paginationConfig");
 
 const getUserDataById = async (req, res) => {
   try {
-    logger(`CONTROLLERS / GETUSERDATABYID - Inside get user data by id`);
+    logger(
+      `INFO`,
+      `CONTROLLERS / GETUSERDATABYID - Inside get user data by id`
+    );
 
     const userData = req.body;
     logger(
+      `INFO`,
       `CONTROLLERS / GETUSERDATABYID - Request body - ${JSON.stringify(
         userData
       )}`
@@ -25,7 +29,7 @@ const getUserDataById = async (req, res) => {
         responseConstant.NO_DATA_FOUND,
         statusCodeConstant.NOT_FOUND
       );
-      logger(`CONTROLLERS / GETUSERDATABYID - No data found`);
+      logger(`INFO`, `CONTROLLERS / GETUSERDATABYID - No data found`);
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
@@ -34,7 +38,7 @@ const getUserDataById = async (req, res) => {
       responseConstant.GET_USER_DATA_BY_ID_SUCCESS,
       statusCodeConstant.SUCCESS
     );
-    logger(`CONTROLLERS / GETUSERDATABYID - Data found successfully`);
+    logger(`INFO`, `CONTROLLERS / GETUSERDATABYID - Data found successfully`);
     return res.status(generatedResponse.code).send(generatedResponse);
   } catch (error) {
     const generatedResponse = responseBuilder(
@@ -43,6 +47,7 @@ const getUserDataById = async (req, res) => {
       statusCodeConstant.ERROR
     );
     logger(
+      `ERROR`,
       `CONTROLLERS / GETUSERDATABYID - Error while getting data by id \n Error - ${error}`
     );
     return res.status(generatedResponse.code).send(generatedResponse);
@@ -52,10 +57,12 @@ const getUserDataById = async (req, res) => {
 const getAllUserData = async (req, res) => {
   try {
     logger(
+      `INFO`,
       `CONTROLLERS / GETALLUSERDATA - Inside get all user data (associated with email)`
     );
     const userData = req.body;
     logger(
+      `INFO`,
       `CONTROLLER / GETALLUSERDATA - Request body - ${JSON.stringify(userData)}`
     );
 
@@ -69,7 +76,7 @@ const getAllUserData = async (req, res) => {
         responseConstant.NO_DATA_FOUND,
         statusCodeConstant.NOT_FOUND
       );
-      logger(`CONTROLLERS / GETALLUSERDATA - No data found`);
+      logger(`INFO`, `CONTROLLERS / GETALLUSERDATA - No data found`);
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
@@ -80,6 +87,7 @@ const getAllUserData = async (req, res) => {
     );
 
     logger(
+      `INFO`,
       `CONTROLLERS / GETALLUSERDATA - All user data (associated with email) found successfully`
     );
     return res.status(generatedResponse.code).send(generatedResponse);
@@ -90,6 +98,7 @@ const getAllUserData = async (req, res) => {
       statusCodeConstant.ERROR
     );
     logger(
+      `ERROR`,
       `CONTROLLERS / GETALLUSERDATA - Error while getting all user data \n Error - ${error}`
     );
     return res.status(generatedResponse.code).send(generatedResponse);
@@ -98,13 +107,15 @@ const getAllUserData = async (req, res) => {
 
 const getAllData = async (req, res) => {
   try {
-    logger(`CONTROLLERS / GETALLDATA - Inside get all data`);
+    logger(`INFO`, `CONTROLLERS / GETALLDATA - Inside get all data`);
     const userData = req?.body;
 
     logger(
+      `INFO`,
       `CONTROLLER / GETALLDATA - Request body - ${JSON.stringify(userData)}`
     );
     logger(
+      `INFO`,
       `CONTROLLER / GETALLDATA - Request query param - ${JSON.stringify(
         req?.query
       )}`
@@ -129,10 +140,10 @@ const getAllData = async (req, res) => {
     let data = [];
 
     if (pagination === false) {
-      logger(`CONTROLLERS / GETALLDATA - Pagination disabled`);
+      logger(`INFO`, `CONTROLLERS / GETALLDATA - Pagination disabled`);
       data = await Data.find({}).select("title article email -_id");
     } else {
-      logger(`CONTROLLERS / GETALLDATA - Pagination enabled`);
+      logger(`INFO`, `CONTROLLERS / GETALLDATA - Pagination enabled`);
       data = await Data.paginate(
         {},
         { ...paginationConfig, select: "title article email -_id" }
@@ -144,7 +155,7 @@ const getAllData = async (req, res) => {
         responseConstant.NO_DATA_FOUND,
         statusCodeConstant.NOT_FOUND
       );
-      logger(`CONTROLLERS / GETALLDATA - No data found`);
+      logger(`INFO`, `CONTROLLERS / GETALLDATA - No data found`);
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
@@ -158,7 +169,7 @@ const getAllData = async (req, res) => {
       statusCodeConstant.SUCCESS
     );
 
-    logger(`CONTROLLERS / GETALLDATA - All data found successfully`);
+    logger(`INFO`, `CONTROLLERS / GETALLDATA - All data found successfully`);
     return res.status(generatedResponse.code).send(generatedResponse);
   } catch (error) {
     const generatedResponse = responseBuilder(
@@ -167,6 +178,7 @@ const getAllData = async (req, res) => {
       statusCodeConstant.ERROR
     );
     logger(
+      `ERROR`,
       `CONTROLLERS / GETALLDATA - Error while getting all data \n Error - ${error}`
     );
     return res.status(generatedResponse.code).send(generatedResponse);

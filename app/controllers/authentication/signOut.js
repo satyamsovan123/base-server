@@ -8,8 +8,8 @@ const {
 
 const signOut = async (req, res) => {
   try {
-    logger(`CONTROLLERS / SIGNOUT - Inside sign out`);
-    logger(`CONTROLLERS / SIGNOUT - User - ${userData.email}`);
+    logger(`INFO`, `CONTROLLERS / SIGNOUT - Inside sign out`);
+    logger(`INFO`, `CONTROLLERS / SIGNOUT - User - ${userData.email}`);
     const token = "";
 
     const generatedResponse = responseBuilder(
@@ -35,6 +35,7 @@ const signOut = async (req, res) => {
       statusCodeConstant.ERROR
     );
     logger(
+      `ERROR`,
       `CONTROLLERS / SIGNOUT - Error while signing out \n Error - ${error}`
     );
     return res.status(generatedResponse.code).send(generatedResponse);

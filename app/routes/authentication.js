@@ -12,7 +12,7 @@ const { processOTPVerification } = require("../controllers");
 router.post("/signup", verifyAuthenticationDataRequest, signUp);
 router.post("/signin", verifyAuthenticationDataRequest, signIn);
 router.post(
-  "/processOTPverification",
+  "/processotpverification",
   verifyProcessOTPVerificationRequest,
   processOTPVerification
 );
