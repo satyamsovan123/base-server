@@ -41,6 +41,7 @@ class UpdateDataValidator {
           "string.min": `${appConstant.ARTICLE} ${responseConstant.SHOULD_HAVE} at least {#limit} characters. ${responseConstant.PROVIDE_VALID_DATA}`,
           "any.required": `${appConstant.ARTICLE} ${responseConstant.IS_REQUIRED} ${responseConstant.PROVIDE_VALID_DATA}`,
         }),
+      files: Joi.array().items(Joi.string()),
     }).messages({
       "object.unknown": `${responseConstant.REDUNDANT_DATA}`,
     });

@@ -7,6 +7,13 @@ const updateData = async (req, res) => {
   try {
     logger(`INFO`, `CONTROLLERS / UPDATEDATA - Inside update data`);
     const userData = req.body;
+    const userFiles = req.files;
+    logger(
+      `INFO`,
+      `CONTROLLERS / UPDATEDATA - ${userFiles.length} file${
+        userFiles.length > 0 ? `s` : ``
+      } from user`
+    );
     logger(
       `INFO`,
       `CONTROLLERS / UPDATEDATA - Request body - ${JSON.stringify(userData)}`

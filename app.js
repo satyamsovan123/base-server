@@ -1,5 +1,6 @@
 const { appConfig } = require("./configs/appConfig");
 global.appConfig = appConfig;
+const bodyParser = require("body-parser");
 
 const cookieParser = require("cookie-parser");
 const compression = require("compression");
@@ -41,6 +42,8 @@ app.use(
 app.use(express.json());
 
 app.use(compression());
+
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(routes);
 

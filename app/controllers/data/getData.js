@@ -120,6 +120,13 @@ const getAllData = async (req, res) => {
         req?.query
       )}`
     );
+
+    // Upload files to Firebase and get the URL
+    // Save the URL in the database
+    // Add functionality to edit files for an post
+    // Add functionality to send files to the client
+    // Add functionality to delete files from the client
+
     let offset = req.query.offset ?? 0;
     let sortByCreatedDate = req.query.sortByCreatedDate ?? false;
     let pagination = true;

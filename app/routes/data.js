@@ -18,6 +18,7 @@ const {
   verifyGetByIdRequest,
 } = require("../middlewares");
 const { addData } = require("../controllers/data/addData");
+const { upload } = require("../../configs");
 
 router.post(
   "/getuserdatabyid",
@@ -27,8 +28,14 @@ router.post(
 );
 router.get("/getalluserdata", verifyJWT, getAllUserData);
 router.get("/getallData", getAllData);
-router.post("/adddata", verifyJWT, verifyAddDataRequest, addData);
-router.put("/updatedata", verifyJWT, verifyUpdateDataRequest, updateData);
+router.post("/adddata", upload.any(), verifyJWT, verifyAddDataRequest, addData);
+router.put(
+  "/updatedata",
+  upload.any(),
+  verifyJWT,
+  verifyUpdateDataRequest,
+  updateData
+);
 router.post("/deletedatabyid", verifyJWT, verifyGetByIdRequest, deleteDataById);
 router.delete("/deletealldata", verifyJWT, deleteAllData);
 
