@@ -142,12 +142,17 @@ const getAllData = async (req, res) => {
 
     if (pagination === false) {
       logger(`INFO`, `CONTROLLERS / GETALLDATA - Pagination disabled`);
-      data = await Data.find({}).select("title article email -_id files");
+      data = await Data.find({}).select(
+        "title article email -_id files createdAt"
+      );
     } else {
       logger(`INFO`, `CONTROLLERS / GETALLDATA - Pagination enabled`);
       data = await Data.paginate(
         {},
-        { ...paginationConfig, select: "title article email -_id files" }
+        {
+          ...paginationConfig,
+          select: "title article email -_id files createdAt",
+        }
       );
     }
     if (!data || data.length === 0) {

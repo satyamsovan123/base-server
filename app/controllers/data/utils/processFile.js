@@ -25,6 +25,10 @@ const uploadToCloud = async (files) => {
     let fileUrls = [];
 
     for (let i = 0; i < files.length; i++) {
+      logger(
+        `INFO`,
+        `CONTROLLERS / UPLOADTOCLOUD - Uploading file - ${files[i]}`
+      );
       const metadata = {
         metadata: {
           firebaseStorageDownloadTokens: uuid(),

@@ -15,6 +15,11 @@ const dataSchema = new mongoose.Schema(
         default: [],
       },
     ],
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      required: false,
+    },
     // expireAt: {
     //   required: false,
     //   type: Date,
