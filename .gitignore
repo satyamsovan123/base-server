@@ -8,7 +8,8 @@ lerna-debug.log*
 .pnpm-debug.log*
 
 # Uploads folder
-uploads/*
+app/uploads/*
+app/logs/*
 
 # .env file
 .env.prod
