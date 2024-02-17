@@ -27,7 +27,9 @@ const uploadToCloud = async (files) => {
     for (let i = 0; i < files.length; i++) {
       logger(
         `INFO`,
-        `CONTROLLERS / UPLOADTOCLOUD - Uploading file - ${files[i]}`
+        `CONTROLLERS / UPLOADTOCLOUD - Uploading file - ${JSON.stringify(
+          files[i]
+        )}`
       );
       const metadata = {
         metadata: {
