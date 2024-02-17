@@ -10,6 +10,18 @@ const updateData = async (req, res) => {
     const userData = req.body;
     const userFiles = req.files;
 
+    let tempFiles = [];
+    if (userData.files && typeof userData.files === "string") {
+      // For single file, it will be a string, so converting it to array
+      tempFiles.push(userData.files);
+    } else if (userData.files && userData.files.length > 0) {
+      // For multiple files, it will be an array, so using it as it is
+      userData.files.forEach((file) => {
+        tempFiles.push(file);
+      });
+    }
+    userData.files = tempFiles;
+
     logger(
       `INFO`,
       `CONTROLLERS / UPDATEDATA - Request body - ${JSON.stringify(userData)}`
@@ -20,14 +32,6 @@ const updateData = async (req, res) => {
       userData.files = fileUrls;
     } else {
       logger(`INFO`, `CONTROLLERS / UPDATEDATA - No files to upload`);
-    }
-
-    if (typeof userData.files === "string") {
-      userData.files = [userData.files];
-    }
-
-    if (!userData.files) {
-      userData.files = [];
     }
 
     const updatedData = await Data.findOneAndUpdate(
