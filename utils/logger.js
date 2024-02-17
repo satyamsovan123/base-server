@@ -8,7 +8,11 @@ if (!fs.existsSync(logsFolderPath)) {
   fs.mkdirSync(logsFolderPath);
 }
 
-const productionLogFilePath = path.join(__dirname, "../logs", "production.log");
+const productionLogFilePath = path.join(
+  __dirname,
+  "../app/logs",
+  "production.log"
+);
 const developmentLogFilePath = path.join(
   __dirname,
   "../app/logs",
