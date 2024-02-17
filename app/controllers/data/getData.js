@@ -21,7 +21,7 @@ const getUserDataById = async (req, res) => {
     const data = await Data.find({
       _id: userData.id,
       email: userData.email,
-    }).select("title article email");
+    }).select("title article email files");
 
     if (!data || data.length === 0) {
       const generatedResponse = responseBuilder(
@@ -67,7 +67,7 @@ const getAllUserData = async (req, res) => {
     );
 
     const data = await Data.find({ email: userData.email }).select(
-      "title article email"
+      "title article email files"
     );
 
     if (!data || data.length === 0) {
@@ -121,12 +121,6 @@ const getAllData = async (req, res) => {
       )}`
     );
 
-    // Upload files to Firebase and get the URL
-    // Save the URL in the database
-    // Add functionality to edit files for an post
-    // Add functionality to send files to the client
-    // Add functionality to delete files from the client
-
     let offset = req.query.offset ?? 0;
     let sortByCreatedDate = req.query.sortByCreatedDate ?? false;
     let pagination = true;
@@ -148,12 +142,12 @@ const getAllData = async (req, res) => {
 
     if (pagination === false) {
       logger(`INFO`, `CONTROLLERS / GETALLDATA - Pagination disabled`);
-      data = await Data.find({}).select("title article email -_id");
+      data = await Data.find({}).select("title article email -_id files");
     } else {
       logger(`INFO`, `CONTROLLERS / GETALLDATA - Pagination enabled`);
       data = await Data.paginate(
         {},
-        { ...paginationConfig, select: "title article email -_id" }
+        { ...paginationConfig, select: "title article email -_id files" }
       );
     }
     if (!data || data.length === 0) {

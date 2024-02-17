@@ -2,20 +2,32 @@ const { logger } = require("../../../utils/logger");
 const { responseBuilder } = require("../../../utils/responseBuilder");
 const { statusCodeConstant, responseConstant } = require("../../../constants");
 const { Data } = require("../../models");
+const { uploadToCloud } = require("./utils/processFile");
 
 const addData = async (req, res) => {
   try {
     logger(`INFO`, `CONTROLLERS / ADDDATA - Inside add data`);
     const userData = req.body;
+    const userFiles = req.files;
+
     logger(
       `INFO`,
       `CONTROLLERS / ADDDATA - Request body - ${JSON.stringify(userData)}`
     );
+
+    if (userFiles.length > 0) {
+      const fileUrls = await uploadToCloud(userFiles);
+      userData.files = fileUrls;
+    } else {
+      logger(`INFO`, `CONTROLLERS / UPDATEDATA - No files to upload`);
+    }
+
     const newData = await Data.create(
       new Data({
         title: userData.title,
         article: userData.article,
         email: userData.email,
+        files: userData.files,
       })
     );
 

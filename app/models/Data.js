@@ -12,6 +12,7 @@ const dataSchema = new mongoose.Schema(
       {
         type: String,
         required: false,
+        default: [],
       },
     ],
     // expireAt: {

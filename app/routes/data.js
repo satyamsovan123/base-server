@@ -31,7 +31,7 @@ router.get("/getallData", getAllData);
 router.post("/adddata", upload.any(), verifyJWT, verifyAddDataRequest, addData);
 router.put(
   "/updatedata",
-  upload.any(),
+  upload.any(), // upload.any() is a middleware from multer that is used to upload files and to accept multipart form data
   verifyJWT,
   verifyUpdateDataRequest,
   updateData
