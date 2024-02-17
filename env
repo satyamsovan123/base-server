@@ -1,0 +1,34 @@
+# Don't forget to add the .env.prod or .env.dev file to your .gitignore file and change the values to your own
+
+BCRYPT_SALT_ROUNDS=5
+JWT_EXPIRES_IN=6h
+JWT_SECRET=jwtsecret
+DATABASE_NAME=MongoDB
+DATABASE_URL=mongodb+srv://admin:password@server.mongodb.net/database?retryWrites=true&w=majority
+PORT=3000
+NODE_ENV=production
+APP_NAME=Base Server
+FRONTEND_URL=https://base-server.web.app
+BACKEND_URL=https://base-server.herokuapp.com/ 
+EXPIRES_AFTER_MINUTES=5
+EMAIL_SERVER_API_KEY=123456ABCDEF
+EMAIL_SERVER=https://email-web-server.herokuapp.com/api/
+REGISTERED_EMAIL=admin@baseserver.com
+TEST_EMAIL=someemail@email.com
+CRON_JOB_FREQUENCY=0 30 08 * * *
+USE_RATE_LIMITER=true
+REQUESTS_PER_MINUTE=100
+
+FIREBASE_STORAGE_BUCKET=gs://base-server.appspot.com
+FIREBASE_TYPE=service_account
+FIREBASE_PROJECT_ID=base-server
+FIREBASE_PRIVATE_KEY_ID=abcdedfghijklmnopqrstuvwx
+FIREBASE_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----\nABCD123\n-----END PRIVATE KEY-----\n
+FIREBASE_CLIENT_EMAIL=base-server.iam.gserviceaccount.com
+FIREBASE_CLIENT_ID=1234567890
+FIREBASE_AUTH_URI=https://accounts.google.com/o/oauth2/auth
+FIREBASE_TOKEN_URI=https://oauth2.googleapis.com/token
+FIREBASE_AUTH_PROVIDER_X509_CERT_URL=https://www.googleapis.com/oauth2/v1/certs
+FIREBASE_CLIENT_X509_CERT_URL=https://www.googleapis.com/robot/v1/metadata/x509/base-server.iam.gserviceaccount.com
+FIREBASE_UNIVERSE_DOMAIN=googleapis.com
+

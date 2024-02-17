@@ -3,19 +3,15 @@ const path = require("path");
 const fs = require("fs");
 const { DateTime } = require("luxon");
 
-const logsFolderPath = path.join(__dirname, "../app/logs");
+const logsFolderPath = path.join(__dirname, "../logs");
 if (!fs.existsSync(logsFolderPath)) {
   fs.mkdirSync(logsFolderPath);
 }
 
-const productionLogFilePath = path.join(
-  __dirname,
-  "../app/logs",
-  "production.log"
-);
+const productionLogFilePath = path.join(__dirname, "../logs", "production.log");
 const developmentLogFilePath = path.join(
   __dirname,
-  "../app/logs",
+  "../logs",
   "development.log"
 );
 const logFilePath =
