@@ -1,10 +1,11 @@
 const multer = require("multer");
 const { uuid } = require("uuidv4");
 const storage = multer.memoryStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/");
-  },
+//   destination: function (req, file, cb) {
+//     cb(null, "uploads/");
+//   },
   filename: function (req, file, cb) {
+    file.originalname = `${Date.now()}-${uuid()}`;
     // cb(null, `${Date.now()}-${file.originalname}`);
     cb(null, `${Date.now()}-${uuid()}`);
   },
