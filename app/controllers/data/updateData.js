@@ -22,11 +22,6 @@ const updateData = async (req, res) => {
     }
     userData.files = tempFiles;
 
-    logger(
-      `INFO`,
-      `CONTROLLERS / UPDATEDATA - Request body - ${JSON.stringify(userData)}`
-    );
-
     if (userFiles.length > 0) {
       const fileUrls = await uploadToCloud(userFiles);
       userData.files = fileUrls;

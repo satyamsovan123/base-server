@@ -1,17 +1,15 @@
 const { firebaseConfig, appConfig } = require("../../../../configs");
 const { logger } = require("../../../../utils/logger");
-const admin = require("firebase-admin");
-const { uuid } = require("uuidv4");
+const { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
-const { responseConstant } = require("../../../../constants");
-
-admin.initializeApp({
-  credential: admin.credential.cert(firebaseConfig),
-  storageBucket: `gs://${appConfig.firebaseStorageBucket}`,
-});
-
-const storage = admin.storage();
-const bucket = storage.bucket();
+const {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} = require("firebase/storage");
+const storage = getStorage();
 
 const uploadToCloud = async (files) => {
   try {
@@ -26,55 +24,27 @@ const uploadToCloud = async (files) => {
     let fileUrls = [];
 
     for (const file of files) {
-      logger(
-        `INFO`,
-        `CONTROLLERS / UPLOADTOCLOUD - Uploading file - ${JSON.stringify(file)}`
-      );
+      logger(`INFO`, `CONTROLLERS / UPLOADTOCLOUD - Uploading file`);
+
       const metadata = {
         metadata: {
-          firebaseStorageDownloadTokens: uuid(),
+          firebaseStorageDownloadTokens: uuidv4(),
         },
         contentType: file.mimetype,
       };
 
-      const blob = bucket.file(file.originalname);
-      const blobStream = blob.createWriteStream({
-        metadata: metadata,
-        resumable: false,
-      });
+      const storageRef = ref(
+        storage,
+        `${firebaseConfig.documentBucketName}/${Date.now()}-${uuidv4()}`
+      );
 
-      await new Promise((resolve, reject) => {
-        blobStream
-          .on("error", (error) => {
-            logger(
-              `ERROR`,
-              `CONTROLLERS / UPLOADTOCLOUD - Error while creating blob stream \n Error - ${error}`
-            );
-            reject(error);
-          })
-          .on("finish", async () => {
-            try {
-              const fileUrl = await blob.getSignedUrl({
-                action: "read",
-                expires: Date.now() + 365 * 24 * 60 * 60 * 1000,
-              });
-              logger(
-                `INFO`,
-                `CONTROLLERS / UPLOADTOCLOUD - Uploading file finished`
-              );
-              fileUrls.push(fileUrl[0]);
-              resolve();
-            } catch (error) {
-              logger(
-                `ERROR`,
-                `CONTROLLERS / UPLOADTOCLOUD - Error while generating downlodable URL \n Error - ${error}`
-              );
-              reject(error);
-            }
-          })
-          .end(file.buffer);
-      });
-      deleteLocalFile(file.path);
+      const result = await uploadBytes(storageRef, file.buffer, metadata);
+
+      const fileUrl = await getDownloadURL(result.ref);
+
+      fileUrls.push(fileUrl);
+
+      // deleteLocalFile(file.path); // This is commented out because we are using memory storage.
     }
 
     logger(
@@ -100,19 +70,10 @@ const deleteFromCloud = async (fileUrl) => {
       `CONTROLLERS / DELETEFROMCLOUD - Inside delete file from cloud`
     );
 
-    const urlParts = fileUrl.split(
-      `https://storage.googleapis.com/${appConfig.firebaseStorageBucket}/`
-    );
-    const bucketName = appConfig.firebaseStorageBucket;
-    const filePath = urlParts[1].split("?")[0];
+    const storageRef = ref(storage, fileUrl);
+    await deleteObject(storageRef);
 
-    const fileRef = storage.bucket(bucketName).file(filePath);
-
-    await fileRef.delete();
-    logger(
-      `INFO`,
-      `CONTROLLERS / DELETEFROMCLOUD - Deleted file from cloud - ${fileUrl}`
-    );
+    logger(`INFO`, `CONTROLLERS / DELETEFROMCLOUD - Deleted file from cloud`);
     return true;
   } catch (error) {
     logger(
