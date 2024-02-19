@@ -3,6 +3,7 @@ const { logger } = require("../../../../utils/logger");
 const admin = require("firebase-admin");
 const { uuid } = require("uuidv4");
 const fs = require("fs");
+const { responseConstant } = require("../../../../constants");
 
 admin.initializeApp({
   credential: admin.credential.cert(firebaseConfig),
@@ -24,30 +25,56 @@ const uploadToCloud = async (files) => {
 
     let fileUrls = [];
 
-    for (let i = 0; i < files.length; i++) {
+    for (const file of files) {
       logger(
         `INFO`,
-        `CONTROLLERS / UPLOADTOCLOUD - Uploading file - ${JSON.stringify(
-          files[i]
-        )}`
+        `CONTROLLERS / UPLOADTOCLOUD - Uploading file - ${JSON.stringify(file)}`
       );
       const metadata = {
         metadata: {
           firebaseStorageDownloadTokens: uuid(),
         },
-        contentType: files[i].mimetype,
+        contentType: file.mimetype,
       };
-      const uploadResult = await bucket.upload(files[i].path, {
-        gzip: true,
-        metadata: metadata,
-      });
-      const fileurl = await uploadResult[0].getSignedUrl({
-        action: "read",
-        expires: Date.now() + 365 * 24 * 60 * 60 * 1000,
-      });
-      fileUrls.push(fileurl[0]);
 
-      deleteLocalFile(files[i].path);
+      const blob = bucket.file(file.originalname);
+      const blobStream = blob.createWriteStream({
+        metadata: metadata,
+        resumable: false,
+      });
+
+      await new Promise((resolve, reject) => {
+        blobStream
+          .on("error", (error) => {
+            logger(
+              `ERROR`,
+              `CONTROLLERS / UPLOADTOCLOUD - Error while creating blob stream \n Error - ${error}`
+            );
+            reject(error);
+          })
+          .on("finish", async () => {
+            try {
+              const fileUrl = await blob.getSignedUrl({
+                action: "read",
+                expires: Date.now() + 365 * 24 * 60 * 60 * 1000,
+              });
+              logger(
+                `INFO`,
+                `CONTROLLERS / UPLOADTOCLOUD - Uploading file finished`
+              );
+              fileUrls.push(fileUrl[0]);
+              resolve();
+            } catch (error) {
+              logger(
+                `ERROR`,
+                `CONTROLLERS / UPLOADTOCLOUD - Error while generating downlodable URL \n Error - ${error}`
+              );
+              reject(error);
+            }
+          })
+          .end(file.buffer);
+      });
+      deleteLocalFile(file.path);
     }
 
     logger(

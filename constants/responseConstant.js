@@ -31,6 +31,9 @@ const responseConstant = {
   DELETE_ALL_DATA_SUCCESS: "All data deleted successfully.",
   DELETE_ALL_DATA_ERROR: "Failed to delete all data.",
 
+  FILE_UPLOAD_SUCCESS: "File(s) uploaded successfully.",
+  FILE_UPLOAD_ERROR: "Failed to upload file(s).",
+
   NO_DATA_FOUND: "No data was found.",
   DATA_ALREADY_EXISTS: "Data already exists.",
 
