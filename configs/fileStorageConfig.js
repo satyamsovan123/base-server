@@ -1,6 +1,6 @@
 const multer = require("multer");
 const { uuid } = require("uuidv4");
-const storage = multer.diskStorage({
+const storage = multer.memoryStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
   },
