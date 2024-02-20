@@ -15,21 +15,20 @@ const addData = async (req, res) => {
       `CONTROLLERS / ADDDATA - Request body - ${JSON.stringify(userData)}`
     );
 
+    const data = new Data({
+      title: userData.title,
+      article: userData.article,
+      email: userData.email,
+    });
+
     if (userFiles.length > 0) {
-      const fileUrls = await uploadToCloud(userFiles);
-      userData.files = fileUrls;
+      const fileUrls = await uploadToCloud(data.id, userFiles);
+      data.files = fileUrls;
     } else {
       logger(`INFO`, `CONTROLLERS / UPDATEDATA - No files to upload`);
     }
 
-    const newData = await Data.create(
-      new Data({
-        title: userData.title,
-        article: userData.article,
-        email: userData.email,
-        files: userData.files,
-      })
-    );
+    const newData = await Data.create(data);
 
     if (!newData) {
       const generatedResponse = responseBuilder(

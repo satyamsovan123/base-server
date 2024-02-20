@@ -2,7 +2,7 @@ const { logger } = require("../../../utils/logger");
 const { responseBuilder } = require("../../../utils/responseBuilder");
 const { statusCodeConstant, responseConstant } = require("../../../constants");
 const { Data } = require("../../models");
-const { uploadToCloud, deleteFromCloud } = require("./utils/processFile");
+const { uploadToCloud, deleteFileFromCloud } = require("./utils/processFile");
 
 const updateData = async (req, res) => {
   try {
@@ -23,7 +23,7 @@ const updateData = async (req, res) => {
     userData.files = tempFiles;
 
     if (userFiles.length > 0) {
-      const fileUrls = await uploadToCloud(userFiles);
+      const fileUrls = await uploadToCloud(userData.id, userFiles);
       userData.files = fileUrls;
     } else {
       logger(`INFO`, `CONTROLLERS / UPDATEDATA - No files to upload`);
@@ -43,7 +43,7 @@ const updateData = async (req, res) => {
     });
 
     filesToBeDeleted.forEach(async (fileUrl) => {
-      await deleteFromCloud(fileUrl);
+      await deleteFileFromCloud(fileUrl);
     });
 
     if (!updatedData) {

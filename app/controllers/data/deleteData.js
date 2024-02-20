@@ -2,6 +2,7 @@ const { logger } = require("../../../utils/logger");
 const { responseBuilder } = require("../../../utils/responseBuilder");
 const { statusCodeConstant, responseConstant } = require("../../../constants");
 const { Data } = require("../../models");
+const { deleteFolderFromCloud } = require("./utils/processFile");
 
 const deleteAllData = async (req, res) => {
   try {
@@ -64,6 +65,8 @@ const deleteDataById = async (req, res) => {
       email: userData.email,
       _id: userData.id,
     });
+
+    await deleteFolderFromCloud(userData.id);
 
     if (!deletedData || deletedData?.deletedCount === 0) {
       const generatedResponse = responseBuilder(

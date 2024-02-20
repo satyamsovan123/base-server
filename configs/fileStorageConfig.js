@@ -8,7 +8,6 @@ const storage = multer.memoryStorage({
   filename: function (req, file, cb) {
     const fileName = `${Date.now()}-${uuidv4()}`;
     file.originalname = fileName;
-    // cb(null, `${Date.now()}-${file.originalname}`);
     cb(null, fileName);
   },
 });
