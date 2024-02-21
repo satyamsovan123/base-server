@@ -6,7 +6,7 @@ const {
   serverConstant,
 } = require("../../../constants");
 const { User } = require("../../models");
-const { excryptPlainText, generateJWT, sendOTP } = require("../../../utils");
+const { excryptPlainText, generateJWT } = require("../../../utils");
 
 const signUp = async (req, res) => {
   try {

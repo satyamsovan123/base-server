@@ -41,7 +41,7 @@ class UpdateDataValidator {
           "string.min": `${appConstant.ARTICLE} ${responseConstant.SHOULD_HAVE} at least {#limit} characters. ${responseConstant.PROVIDE_VALID_DATA}`,
           "any.required": `${appConstant.ARTICLE} ${responseConstant.IS_REQUIRED} ${responseConstant.PROVIDE_VALID_DATA}`,
         }),
-      files: Joi.alternatives().try(
+      fileUrls: Joi.alternatives().try(
         Joi.array().items(Joi.string().allow("")).allow(""),
         Joi.string().allow("")
       ),

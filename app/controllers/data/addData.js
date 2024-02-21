@@ -2,17 +2,21 @@ const { logger } = require("../../../utils/logger");
 const { responseBuilder } = require("../../../utils/responseBuilder");
 const { statusCodeConstant, responseConstant } = require("../../../constants");
 const { Data } = require("../../models");
-const { uploadToCloud } = require("./utils/processFile");
+
+const { redactSensitiveInformation } = require("../../../utils");
+const { uploadFilesToCloud, deleteFolderFromCloud } = require("../../services");
 
 const addData = async (req, res) => {
   try {
     logger(`INFO`, `CONTROLLERS / ADDDATA - Inside add data`);
     const userData = req.body;
-    const userFiles = req.files;
+    const newFiles = req.files;
 
     logger(
       `INFO`,
-      `CONTROLLERS / ADDDATA - Request body - ${JSON.stringify(userData)}`
+      `CONTROLLERS / ADDDATA - Request body - ${redactSensitiveInformation(
+        userData
+      )}`
     );
 
     const data = new Data({
@@ -21,11 +25,27 @@ const addData = async (req, res) => {
       email: userData.email,
     });
 
-    if (userFiles.length > 0) {
-      const fileUrls = await uploadToCloud(data.id, userFiles);
-      data.files = fileUrls;
+    if (newFiles.length > 0) {
+      const fileUrls = await uploadFilesToCloud(data.id, newFiles);
+
+      if (fileUrls.length !== newFiles.length) {
+        logger(
+          `ERROR`,
+          `CONTROLLERS / ADDDATA - Uploaded files count mismatch with new files count`
+        );
+        const id = data.id.toString();
+        await deleteFolderFromCloud(id);
+        const generatedResponse = responseBuilder(
+          {},
+          responseConstant.ADD_DATA_ERROR,
+          statusCodeConstant.ERROR
+        );
+        return res.status(generatedResponse.code).send(generatedResponse);
+      }
+
+      data.fileUrls = fileUrls;
     } else {
-      logger(`INFO`, `CONTROLLERS / UPDATEDATA - No files to upload`);
+      logger(`INFO`, `CONTROLLERS / UPDATEDATA - No new files to upload`);
     }
 
     const newData = await Data.create(data);
@@ -42,7 +62,12 @@ const addData = async (req, res) => {
 
     logger(`INFO`, `CONTROLLERS / ADDDATA - Created new data`);
     const generatedResponse = responseBuilder(
-      { title: newData.title, article: newData.article, id: newData._id },
+      {
+        title: newData.title,
+        article: newData.article,
+        id: newData._id,
+        fileUrls: newData.fileUrls,
+      },
       responseConstant.ADD_DATA_SUCCESS,
       statusCodeConstant.SUCCESS
     );

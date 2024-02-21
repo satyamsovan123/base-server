@@ -1,5 +1,5 @@
 const { responseConstant, statusCodeConstant } = require("../../constants");
-const { logger } = require("../../utils");
+const { logger, redactSensitiveInformation } = require("../../utils");
 const { responseBuilder } = require("../../utils/responseBuilder");
 const { checkExistingData } = require("../../utils");
 const { ProcessOTPVerificationValidator } = require("../validators");
@@ -13,7 +13,7 @@ const verifyProcessOTPVerificationRequest = async (req, res, next) => {
     const userData = req.body;
     logger(
       `INFO`,
-      `MIDDLEWARES / VERIFYPROCESSOTPREQUEST - Request body - ${JSON.stringify(
+      `MIDDLEWARES / VERIFYPROCESSOTPREQUEST - Request body - ${redactSensitiveInformation(
         userData
       )}`
     );

@@ -6,8 +6,9 @@ const { signOut } = require("../controllers/authentication/signOut");
 const {
   verifyAuthenticationDataRequest,
   verifyProcessOTPVerificationRequest,
+  verifyJWT,
 } = require("../middlewares");
-const { processOTPVerification } = require("../controllers");
+const { processOTPVerification, deleteAccount } = require("../controllers");
 
 router.post("/signup", verifyAuthenticationDataRequest, signUp);
 router.post("/signin", verifyAuthenticationDataRequest, signIn);
@@ -17,5 +18,6 @@ router.post(
   processOTPVerification
 );
 router.get("/signout", signOut);
+router.delete("/deleteaccount", verifyJWT, deleteAccount);
 
 module.exports = router;

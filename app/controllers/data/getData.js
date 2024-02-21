@@ -3,6 +3,7 @@ const { responseBuilder } = require("../../../utils/responseBuilder");
 const { statusCodeConstant, responseConstant } = require("../../../constants");
 const { Data } = require("../../models");
 const { paginationConfig } = require("../../../configs/paginationConfig");
+const { redactSensitiveInformation } = require("../../../utils");
 
 const getUserDataById = async (req, res) => {
   try {
@@ -14,14 +15,14 @@ const getUserDataById = async (req, res) => {
     const userData = req.body;
     logger(
       `INFO`,
-      `CONTROLLERS / GETUSERDATABYID - Request body - ${JSON.stringify(
+      `CONTROLLERS / GETUSERDATABYID - Request body - ${redactSensitiveInformation(
         userData
       )}`
     );
     const data = await Data.find({
       _id: userData.id,
       email: userData.email,
-    }).select("title article email files");
+    }).select("title article email fileUrls");
 
     if (!data || data.length === 0) {
       const generatedResponse = responseBuilder(
@@ -63,11 +64,13 @@ const getAllUserData = async (req, res) => {
     const userData = req.body;
     logger(
       `INFO`,
-      `CONTROLLER / GETALLUSERDATA - Request body - ${JSON.stringify(userData)}`
+      `CONTROLLER / GETALLUSERDATA - Request body - ${redactSensitiveInformation(
+        userData
+      )}`
     );
 
     const data = await Data.find({ email: userData.email }).select(
-      "title article email files"
+      "title article email fileUrls createdAt"
     );
 
     if (!data || data.length === 0) {
@@ -112,11 +115,13 @@ const getAllData = async (req, res) => {
 
     logger(
       `INFO`,
-      `CONTROLLER / GETALLDATA - Request body - ${JSON.stringify(userData)}`
+      `CONTROLLER / GETALLDATA - Request body - ${redactSensitiveInformation(
+        userData
+      )}`
     );
     logger(
       `INFO`,
-      `CONTROLLER / GETALLDATA - Request query param - ${JSON.stringify(
+      `CONTROLLER / GETALLDATA - Request query param - ${redactSensitiveInformation(
         req?.query
       )}`
     );
@@ -143,7 +148,7 @@ const getAllData = async (req, res) => {
     if (pagination === false) {
       logger(`INFO`, `CONTROLLERS / GETALLDATA - Pagination disabled`);
       data = await Data.find({}).select(
-        "title article email -_id files createdAt"
+        "title article email -_id fileUrls createdAt"
       );
     } else {
       logger(`INFO`, `CONTROLLERS / GETALLDATA - Pagination enabled`);
@@ -151,7 +156,7 @@ const getAllData = async (req, res) => {
         {},
         {
           ...paginationConfig,
-          select: "title article email -_id files createdAt",
+          select: "title article email -_id fileUrls createdAt",
         }
       );
     }

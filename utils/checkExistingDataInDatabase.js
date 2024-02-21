@@ -1,6 +1,7 @@
 const { Data } = require("../app/models");
 const { User } = require("../app/models");
 const { logger } = require("./logger");
+const { redactSensitiveInformation } = require("./redactSensitiveInformation");
 
 const checkExistingData = async (title, email) => {
   logger(`INFO`, `UTILS / CHECKEXISTINGDATA - Inside check existing data`);
@@ -15,7 +16,9 @@ const checkExistingData = async (title, email) => {
       cursorData = result;
       logger(
         `INFO`,
-        `UTILS / CHECKEXISTINGDATA - Found existing data - ${cursorData}`
+        `UTILS / CHECKEXISTINGDATA - Found existing data - ${redactSensitiveInformation(
+          cursorData
+        )}`
       );
     })
     .catch((error) => {
@@ -42,7 +45,9 @@ const checkExistingUser = async (email) => {
       cursorData = result;
       logger(
         `INFO`,
-        `UTILS / CHECKEXISTINGUSER - Found existing user - ${cursorData?.email}`
+        `UTILS / CHECKEXISTINGUSER - Found existing user - ${redactSensitiveInformation(
+          { email: cursorData.email, isVerified: cursorData.isVerified }
+        )}`
       );
     })
     .catch((error) => {

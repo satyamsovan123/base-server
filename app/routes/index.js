@@ -29,39 +29,10 @@ router.get("/", (req, res) => {
   }
 });
 
-router.get("/test", (req, res) => {
-  try {
-    const query = req.query;
-    if (query.error) {
-      throw new Error("This is a test error");
-    } else if (query.delayedResponse) {
-      setTimeout(() => {
-        const generatedResponse = responseBuilder(
-          {},
-          serverConstant.SERVER_IS_RUNNING,
-          statusCodeConstant.SUCCESS
-        );
-        return res.status(generatedResponse.code).send(generatedResponse);
-      }, 5000);
-    } else {
-      const generatedResponse = responseBuilder(
-        {},
-        serverConstant.SERVER_IS_RUNNING,
-        statusCodeConstant.SUCCESS
-      );
-      return res.status(generatedResponse.code).send(generatedResponse);
-    }
-  } catch (error) {
-    logger(`ERROR`, `ROUTES / TEST - Error while testing \n Error - ${error}`);
-    let generatedResponse = responseBuilder();
-    return res.status(generatedResponse.code).send(generatedResponse);
-  }
-});
-
 router.get("/web", (req, res) => {
   try {
     res.sendFile("index.html", {
-      root: __dirname + "/../../public/base-server-ui",
+      root: __dirname + "/../../public/baseServerUi",
     });
   } catch (error) {
     logger(

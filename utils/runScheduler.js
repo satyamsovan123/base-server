@@ -1,6 +1,8 @@
 const { logger } = require("./logger");
 const cron = require("node-cron");
-const { sendCampaignEmail } = require("./sendCampaignEmail");
+const {
+  sendCampaignEmail,
+} = require("../app/services/email/sendCampaignEmail");
 const { Data } = require("../app/models");
 const { appConfig } = require("../configs/appConfig");
 

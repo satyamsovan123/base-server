@@ -1,5 +1,5 @@
 const { responseConstant, statusCodeConstant } = require("../../constants");
-const { logger } = require("../../utils");
+const { logger, redactSensitiveInformation } = require("../../utils");
 const { responseBuilder } = require("../../utils/responseBuilder");
 
 const { GetByIdValidator } = require("../validators");
@@ -13,7 +13,7 @@ const verifyGetByIdRequest = async (req, res, next) => {
     const userData = req.body;
     logger(
       `INFO`,
-      `MIDDLEWARES / GETBYIDREQUEST - Request body - ${JSON.stringify(
+      `MIDDLEWARES / GETBYIDREQUEST - Request body - ${redactSensitiveInformation(
         userData
       )}`
     );

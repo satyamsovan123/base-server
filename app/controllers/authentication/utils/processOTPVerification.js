@@ -5,8 +5,8 @@ const {
   responseConstant,
   serverConstant,
 } = require("../../../../constants");
-const { verifyOTP } = require("../../../../utils");
 const { User } = require("../../../models");
+const { verifyOTP } = require("../../../services");
 
 const processOTPVerification = async (req, res) => {
   try {

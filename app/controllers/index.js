@@ -9,14 +9,10 @@ const { addData } = require("./data/addData");
 const { deleteAllData, deleteDataById } = require("./data/deleteData");
 const { updateData } = require("./data/updateData");
 const {
-  uploadToCloud,
-  deleteFileFromCloud,
-  deleteFolderFromCloud,
-} = require("./data/utils/processFile");
-const {
   processOTPVerification,
 } = require("./authentication/utils/processOTPVerification");
 const { signOut } = require("./authentication/signOut");
+const { deleteAccount } = require("./authentication/deleteAccount");
 
 module.exports = {
   signUp,
@@ -28,9 +24,7 @@ module.exports = {
   deleteAllData,
   deleteDataById,
   updateData,
-  uploadToCloud,
-  deleteFileFromCloud,
-  deleteFolderFromCloud,
   processOTPVerification,
   signOut,
+  deleteAccount,
 };

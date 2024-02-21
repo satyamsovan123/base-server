@@ -8,6 +8,9 @@ const responseConstant = {
   SIGN_OUT_SUCCESS: "Sign out successful.",
   SIGN_OUT_ERROR: "Failed to sign out.",
 
+  DELETE_ACCOUNT_SUCCESS: "Account deleted successfully.",
+  DELETE_ACCOUNT_ERROR: "Failed to delete account.",
+
   GET_ALL_USER_DATA_SUCCESS: "Retrieval of all user data successful.",
   GET_ALL_USER_DATA_ERROR: "Failed to retrieve all user data.",
 

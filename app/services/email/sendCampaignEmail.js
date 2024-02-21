@@ -1,8 +1,11 @@
-const { appConfig } = require("../configs/appConfig");
-const { serverConstant } = require("../constants/serverConstant");
-const { logger } = require("./logger");
+const { appConfig } = require("../../../configs/appConfig");
+const { serverConstant, statusCodeConstant } = require("../../../constants");
+
+const { logger } = require("../../../utils/logger");
 const axios = require("axios");
-const { statusCodeConstant } = require("../constants");
+const {
+  redactSensitiveInformation,
+} = require("../../../utils/redactSensitiveInformation");
 
 const sendCampaignEmail = async (email, emailBody) => {
   try {
@@ -19,12 +22,14 @@ const sendCampaignEmail = async (email, emailBody) => {
     const apiUrl = `${appConfig.emailServer}${serverConstant.SEND_CAMPAIGN_EMAIL}`;
     logger(
       `INFO`,
-      `UTILS / SENDEMAILCAMPAIGN - Email details - ${JSON.stringify(postData)}`
+      `UTILS / SENDEMAILCAMPAIGN - Email details - ${redactSensitiveInformation(
+        postData
+      )}`
     );
     const response = await axios.post(apiUrl, postData, { headers });
     logger(
       `INFO`,
-      `UTILS / SENDEMAILCAMPAIGN - Response from email server - ${JSON.stringify(
+      `UTILS / SENDEMAILCAMPAIGN - Response from email server - ${redactSensitiveInformation(
         response.data
       )}`
     );

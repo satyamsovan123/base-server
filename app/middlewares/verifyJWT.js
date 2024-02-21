@@ -1,6 +1,6 @@
 const { appConfig } = require("../../configs/appConfig");
 const { responseConstant, statusCodeConstant } = require("../../constants");
-const { logger, checkExistingUser, sendOTP } = require("../../utils");
+const { logger, checkExistingUser } = require("../../utils");
 const { responseBuilder } = require("../../utils/responseBuilder");
 const jwt = require("jsonwebtoken");
 
@@ -34,32 +34,12 @@ const verifyJWT = async (req, res, next) => {
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
-    if (!existingUser.isVerified) {
-      logger(`INFO`, `MIDDLEWARES / VERIFYJWT - User email is not verified`);
-      const otpSent = await sendOTP(existingUser.email);
+    logger(`INFO`, `MIDDLEWARES / VERIFYJWT - User is verified`);
+    req.body["email"] = decodedData?.email;
+    req.body["isVerified"] = existingUser?.isVerified;
 
-      if (!otpSent) {
-        const generatedResponse = responseBuilder(
-          {},
-          responseConstant.UNABLE_TO_SEND_OTP,
-          statusCodeConstant.ERROR
-        );
-        logger(`INFO`, `MIDDLEWARES / VERIFYJWT - Error while sending OTP`);
-        return res.status(generatedResponse.code).send(generatedResponse);
-      }
-      logger(`INFO`, `MIDDLEWARES / VERIFYJWT - OTP sent successfully`);
-      const generatedResponse = responseBuilder(
-        {},
-        responseConstant.OTP_NOT_VERIFIED,
-        statusCodeConstant.UNAUTHORIZED
-      );
-      return res.status(generatedResponse.code).send(generatedResponse);
-    } else {
-      logger(`INFO`, `MIDDLEWARES / VERIFYJWT - User is verified`);
-      req.body["email"] = decodedData?.email;
-      // req.body["email"] = "testuser@email.com";
-      next();
-    }
+    // req.body["email"] = "testuser@email.com";
+    next();
   } catch (error) {
     const generatedResponse = responseBuilder(
       {},

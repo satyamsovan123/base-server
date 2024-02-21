@@ -8,7 +8,7 @@ const dataSchema = new mongoose.Schema(
     title: { type: String, required: true },
     article: { type: String, required: true },
     email: { type: String, required: true },
-    files: [
+    fileUrls: [
       {
         type: String,
         required: false,

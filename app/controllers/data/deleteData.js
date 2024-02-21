@@ -2,7 +2,8 @@ const { logger } = require("../../../utils/logger");
 const { responseBuilder } = require("../../../utils/responseBuilder");
 const { statusCodeConstant, responseConstant } = require("../../../constants");
 const { Data } = require("../../models");
-const { deleteFolderFromCloud } = require("./utils/processFile");
+const { redactSensitiveInformation } = require("../../../utils");
+const { deleteFolderFromCloud } = require("../../services");
 
 const deleteAllData = async (req, res) => {
   try {
@@ -13,8 +14,17 @@ const deleteAllData = async (req, res) => {
     const userData = req.body;
     logger(
       `INFO`,
-      `CONTROLLERS / DELETEALLDATA - Request body - ${JSON.stringify(userData)}`
+      `CONTROLLERS / DELETEALLDATA - Request body - ${redactSensitiveInformation(
+        userData
+      )}`
     );
+
+    const documentsToDelete = await Data.find({ email: userData.email });
+    documentsToDelete.forEach(async (document) => {
+      const id = document._id.toString();
+      await deleteFolderFromCloud(id);
+    });
+
     const deletedData = await Data.deleteMany({ email: userData.email });
     if (!deletedData || deletedData?.deletedCount === 0) {
       const generatedResponse = responseBuilder(
@@ -57,7 +67,7 @@ const deleteDataById = async (req, res) => {
     const userData = req.body;
     logger(
       `INFO`,
-      `CONTROLLERS / DELETEDATABYID - Request body - ${JSON.stringify(
+      `CONTROLLERS / DELETEDATABYID - Request body - ${redactSensitiveInformation(
         userData
       )}`
     );

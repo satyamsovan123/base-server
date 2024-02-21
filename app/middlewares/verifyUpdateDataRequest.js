@@ -1,5 +1,5 @@
 const { responseConstant, statusCodeConstant } = require("../../constants");
-const { logger } = require("../../utils");
+const { logger, redactSensitiveInformation } = require("../../utils");
 const { responseBuilder } = require("../../utils/responseBuilder");
 const { UpdateDataValidator } = require("../validators");
 
@@ -12,8 +12,8 @@ const verifyUpdateDataRequest = async (req, res, next) => {
     const userData = req.body;
     logger(
       `INFO`,
-      `MIDDLEWARES / VERIFYUPDATEDATAREQUEST - Request body - ${JSON.stringify(
-        userData
+      `MIDDLEWARES / VERIFYUPDATEDATAREQUEST - Request body - ${redactSensitiveInformation(
+        req.body
       )}`
     );
     const dataValidationResult = await new UpdateDataValidator(

@@ -16,6 +16,7 @@ const {
   verifyUpdateDataRequest,
   verifyAddDataRequest,
   verifyGetByIdRequest,
+  checkEmailVerificationStatus,
 } = require("../middlewares");
 const { addData } = require("../controllers/data/addData");
 const { upload } = require("../../configs");
@@ -23,20 +24,45 @@ const { upload } = require("../../configs");
 router.post(
   "/getuserdatabyid",
   verifyJWT,
+  checkEmailVerificationStatus,
   verifyGetByIdRequest,
   getUserDataById
 );
-router.get("/getalluserdata", verifyJWT, getAllUserData);
+router.get(
+  "/getalluserdata",
+  verifyJWT,
+  checkEmailVerificationStatus,
+  getAllUserData
+);
 router.get("/getallData", getAllData);
-router.post("/adddata", upload.any(), verifyJWT, verifyAddDataRequest, addData);
+router.post(
+  "/adddata",
+  upload.any(), // upload.any() is a middleware from multer that is used to upload files and to accept multipart form data
+  verifyJWT,
+  checkEmailVerificationStatus,
+  verifyAddDataRequest,
+  addData
+);
 router.put(
   "/updatedata",
   upload.any(), // upload.any() is a middleware from multer that is used to upload files and to accept multipart form data
   verifyJWT,
+  checkEmailVerificationStatus,
   verifyUpdateDataRequest,
   updateData
 );
-router.post("/deletedatabyid", verifyJWT, verifyGetByIdRequest, deleteDataById);
-router.delete("/deletealldata", verifyJWT, deleteAllData);
+router.post(
+  "/deletedatabyid",
+  verifyJWT,
+  checkEmailVerificationStatus,
+  verifyGetByIdRequest,
+  deleteDataById
+);
+router.delete(
+  "/deletealldata",
+  verifyJWT,
+  checkEmailVerificationStatus,
+  deleteAllData
+);
 
 module.exports = router;

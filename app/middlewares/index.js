@@ -9,6 +9,9 @@ const {
   verifyProcessOTPVerificationRequest,
 } = require("./verifyProcessOTPVerificationRequest");
 const rateLimiter = require("./rateLimiter");
+const {
+  checkEmailVerificationStatus,
+} = require("./checkEmailVerificationStatus");
 
 module.exports = {
   rateLimiter,
@@ -18,4 +21,5 @@ module.exports = {
   verifyAuthenticationDataRequest,
   verifyUpdateDataRequest,
   verifyProcessOTPVerificationRequest,
+  checkEmailVerificationStatus,
 };

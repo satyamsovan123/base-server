@@ -2,49 +2,99 @@ const { logger } = require("../../../utils/logger");
 const { responseBuilder } = require("../../../utils/responseBuilder");
 const { statusCodeConstant, responseConstant } = require("../../../constants");
 const { Data } = require("../../models");
-const { uploadToCloud, deleteFileFromCloud } = require("./utils/processFile");
+const {
+  uploadFilesToCloud,
+  deleteFolderFromCloud,
+  deleteFileFromCloud,
+} = require("../../services");
 
 const updateData = async (req, res) => {
   try {
     logger(`INFO`, `CONTROLLERS / UPDATEDATA - Inside update data`);
     const userData = req.body;
-    const userFiles = req.files;
+    const newFiles = req.files;
 
-    let tempFiles = [];
-    if (userData.files && typeof userData.files === "string") {
-      // For single file, it will be a string, so converting it to array
-      tempFiles.push(userData.files);
-    } else if (userData.files && userData.files.length > 0) {
-      // For multiple files, it will be an array, so using it as it is
-      userData.files.forEach((file) => {
-        tempFiles.push(file);
+    let sanitizedFileUrls = [];
+
+    if (userData.fileUrls) {
+      if (typeof userData.fileUrls === "string") {
+        sanitizedFileUrls.push(userData.fileUrls);
+      } else {
+        userData.fileUrls.forEach((url) => {
+          sanitizedFileUrls.push(url);
+        });
+      }
+      logger(
+        `INFO`,
+        `CONTROLLERS / UPDATEDATA - Updated file urls - ${sanitizedFileUrls}`
+      );
+    }
+
+    if (newFiles.length > 0) {
+      const fileUrls = await uploadFilesToCloud(userData.id, newFiles);
+
+      if (fileUrls.length !== newFiles.length) {
+        logger(
+          `ERROR`,
+          `CONTROLLERS / UPDATEDATA - Uploaded files count mismatch with new files count`
+        );
+        const id = userData.id.toString();
+        await deleteFolderFromCloud(id);
+
+        const generatedResponse = responseBuilder(
+          {},
+          responseConstant.UPDATE_DATA_ERROR,
+          statusCodeConstant.ERROR
+        );
+        return res.status(generatedResponse.code).send(generatedResponse);
+      }
+
+      fileUrls.forEach((url) => {
+        sanitizedFileUrls.push(url);
       });
-    }
-    userData.files = tempFiles;
-
-    if (userFiles.length > 0) {
-      const fileUrls = await uploadToCloud(userData.id, userFiles);
-      userData.files = fileUrls;
+      logger(
+        `INFO`,
+        `CONTROLLERS / UPDATEDATA - Updated file urls along with new file urls - ${sanitizedFileUrls}`
+      );
     } else {
-      logger(`INFO`, `CONTROLLERS / UPDATEDATA - No files to upload`);
+      logger(`INFO`, `CONTROLLERS / UPDATEDATA - No new files to upload`);
     }
+
+    const previousFileUrls = await Data.findOne({ _id: userData.id }).select(
+      "fileUrls"
+    );
+    logger(
+      `INFO`,
+      `CONTROLLERS / UPDATEDATA - Previous file urls - ${previousFileUrls.fileUrls}`
+    );
+
+    const filesToBeDeleted = [];
+
+    previousFileUrls.fileUrls.forEach((fileUrl) => {
+      if (!sanitizedFileUrls.includes(fileUrl)) {
+        filesToBeDeleted.push(fileUrl);
+      }
+    });
+
+    logger(
+      `INFO`,
+      `CONTROLLERS / UPDATEDATA - Files to be deleted - ${filesToBeDeleted}`
+    );
+
+    filesToBeDeleted.forEach(async (fileUrl) => {
+      await deleteFileFromCloud(fileUrl);
+    });
+
+    userData.fileUrls = sanitizedFileUrls;
 
     const updatedData = await Data.findOneAndUpdate(
       { _id: userData.id },
       userData,
       {
-        new: false,
+        new: true,
         useFindAndModify: false,
       }
-    ).select("title article _id files");
-
-    const filesToBeDeleted = updatedData.files.filter((fileUrl) => {
-      return !userData.files.includes(fileUrl);
-    });
-
-    filesToBeDeleted.forEach(async (fileUrl) => {
-      await deleteFileFromCloud(fileUrl);
-    });
+    ).select("title article _id fileUrls");
 
     if (!updatedData) {
       const generatedResponse = responseBuilder(

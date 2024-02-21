@@ -1,5 +1,5 @@
 const { responseConstant, statusCodeConstant } = require("../../constants");
-const { logger } = require("../../utils");
+const { logger, redactSensitiveInformation } = require("../../utils");
 const { responseBuilder } = require("../../utils/responseBuilder");
 const { checkExistingData } = require("../../utils");
 const { AddDataValidator } = require("../validators");
@@ -13,7 +13,7 @@ const verifyAddDataRequest = async (req, res, next) => {
     const userData = req.body;
     logger(
       `INFO`,
-      `MIDDLEWARES / VERIFYADDDATAREQUEST - Request body - ${JSON.stringify(
+      `MIDDLEWARES / VERIFYADDDATAREQUEST - Request body - ${redactSensitiveInformation(
         userData
       )}`
     );
