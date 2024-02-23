@@ -1,4 +1,4 @@
-# Don't forget to add the .env.prod or .env.dev file to your .gitignore file and change the values to your own
+# Don't forget to add the .env.prod or .env.dev file to your .gitignore file and change these values to your own
 
 BCRYPT_SALT_ROUNDS=5
 JWT_EXPIRES_IN=6h
@@ -12,7 +12,7 @@ FRONTEND_URL=https://base-server.web.app
 BACKEND_URL=https://base-server.herokuapp.com/
 EXPIRES_AFTER_MINUTES=5
 EMAIL_SERVER_API_KEY=123456ABCDEF
-EMAIL_SERVER=https://email-web-server.herokuapp.com/api/
+EMAIL_SERVER_URL=https://email-web-server.herokuapp.com/api/
 REGISTERED_EMAIL=admin@baseserver.com
 TEST_EMAIL=someemail@email.com
 CRON_JOB_FREQUENCY=0 30 08 \* \* \*

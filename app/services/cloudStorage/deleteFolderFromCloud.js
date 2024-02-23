@@ -4,6 +4,7 @@ const {
   getStorage,
   ref,
   uploadBytes,
+  listAll,
   getDownloadURL,
   deleteObject,
 } = require("firebase/storage");
