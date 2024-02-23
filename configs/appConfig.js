@@ -20,7 +20,7 @@ let appConfig = {
   bcryptSaltRounds: JSON.parse(process.env.BCRYPT_SALT_ROUNDS),
   expiresAfterMinutes: JSON.parse(process.env.EXPIRES_AFTER_MINUTES || 1),
   appVersion: "1.0",
-  emailServer: process.env.EMAIL_SERVER,
+  emailServerURL: process.env.EMAIL_SERVER_URL,
   emailServerAPIKey: process.env.EMAIL_SERVER_API_KEY,
   emailServerUsername: process.env.REGISTERED_EMAIL,
   testEmail: process.env.TEST_EMAIL,

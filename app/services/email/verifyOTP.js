@@ -19,7 +19,7 @@ const verifyOTP = async (email, otp) => {
     const headers = {
       "email-server-api-key": appConfig.emailServerAPIKey,
     };
-    const apiUrl = `${appConfig.emailServer}${serverConstant.VERIFY_OTP}`;
+    const apiUrl = `${appConfig.emailServerURL}${serverConstant.VERIFY_OTP}`;
     logger(
       `INFO`,
       `SERVICES / VERIFYOTP - Email details - ${redactSensitiveInformation(

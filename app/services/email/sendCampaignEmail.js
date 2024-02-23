@@ -19,7 +19,7 @@ const sendCampaignEmail = async (email, emailBody) => {
     const headers = {
       "email-server-api-key": appConfig.emailServerAPIKey,
     };
-    const apiUrl = `${appConfig.emailServer}${serverConstant.SEND_CAMPAIGN_EMAIL}`;
+    const apiUrl = `${appConfig.emailServerURL}${serverConstant.SEND_CAMPAIGN_EMAIL}`;
     logger(
       `INFO`,
       `UTILS / SENDEMAILCAMPAIGN - Email details - ${redactSensitiveInformation(

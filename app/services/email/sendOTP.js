@@ -19,7 +19,7 @@ const sendOTP = async (email) => {
     const headers = {
       "email-server-api-key": appConfig.emailServerAPIKey,
     };
-    const apiUrl = `${appConfig.emailServer}${serverConstant.SEND_OTP}`;
+    const apiUrl = `${appConfig.emailServerURL}${serverConstant.SEND_OTP}`;
     logger(
       `INFO`,
       `SERVICES / SENDOTP - Email details - ${redactSensitiveInformation(
