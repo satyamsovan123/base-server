@@ -4,7 +4,12 @@ const { statusCodeConstant, responseConstant } = require("../../../constants");
 const { Data } = require("../../models");
 
 const { redactSensitiveInformation } = require("../../../utils");
-const { uploadFilesToCloud, deleteFolderFromCloud } = require("../../services");
+const {
+  uploadFilesToCloud,
+  deleteFolderFromCloud,
+  generateTagsFromData,
+  detectProfanity,
+} = require("../../services");
 
 const addData = async (req, res) => {
   try {
@@ -19,10 +24,15 @@ const addData = async (req, res) => {
       )}`
     );
 
+    const hasProfanityInArticle = await detectProfanity(userData.article);
+    const hasProfanityInTitle = await detectProfanity(userData.title);
+    const hasProfanity = hasProfanityInArticle || hasProfanityInTitle;
+
     const data = new Data({
       title: userData.title,
       article: userData.article,
       email: userData.email,
+      hasProfanity: hasProfanity,
     });
 
     if (newFiles.length > 0) {
@@ -48,6 +58,8 @@ const addData = async (req, res) => {
       logger(`INFO`, `CONTROLLERS / UPDATEDATA - No new files to upload`);
     }
 
+    const tags = await generateTagsFromData(data.article);
+    data.tags = tags;
     const newData = await Data.create(data);
 
     if (!newData) {

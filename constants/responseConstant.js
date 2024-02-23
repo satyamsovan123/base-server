@@ -43,6 +43,9 @@ const responseConstant = {
   PLEASE_SIGN_IN: "Please sign in.",
   PLEASE_SIGN_UP: "Please sign up.",
 
+  PROFANITY_DETECTED:
+    "Your contributions are appreciated. Please ensure they are respectful and suitable for all audiences.",
+
   USER_ALREADY_EXISTS: "An account already exists.",
 
   OTP_SENT: "OTP sent successfully.",

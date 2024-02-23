@@ -8,6 +8,8 @@ const { uploadFilesToCloud } = require("./cloudStorage/uploadFilesToCloud");
 const {
   deleteFolderFromCloud,
 } = require("./cloudStorage/deleteFolderFromCloud");
+const { generateTagsFromData } = require("./dataAnalysis/generateTagsFromData");
+const { detectProfanity } = require("./dataAnalysis/detectProfanity");
 
 module.exports = {
   sendCampaignEmail,
@@ -18,4 +20,6 @@ module.exports = {
   deleteFileFromCloud,
   uploadFilesToCloud,
   deleteFolderFromCloud,
+  generateTagsFromData,
+  detectProfanity,
 };

@@ -148,7 +148,7 @@ const getAllData = async (req, res) => {
     if (pagination === false) {
       logger(`INFO`, `CONTROLLERS / GETALLDATA - Pagination disabled`);
       data = await Data.find({}).select(
-        "title article email -_id fileUrls createdAt"
+        "title article email -_id fileUrls createdAt hasProfanity tags"
       );
     } else {
       logger(`INFO`, `CONTROLLERS / GETALLDATA - Pagination enabled`);
@@ -156,7 +156,8 @@ const getAllData = async (req, res) => {
         {},
         {
           ...paginationConfig,
-          select: "title article email -_id fileUrls createdAt",
+          select:
+            "title article email -_id fileUrls createdAt hasProfanity tags",
         }
       );
     }

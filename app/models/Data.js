@@ -8,6 +8,8 @@ const dataSchema = new mongoose.Schema(
     title: { type: String, required: true },
     article: { type: String, required: true },
     email: { type: String, required: true },
+    tags: [{ type: String, required: false, default: [] }],
+    hasProfanity: { type: Boolean, required: false, default: false },
     fileUrls: [
       {
         type: String,

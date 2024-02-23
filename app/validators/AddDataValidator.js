@@ -19,6 +19,13 @@ class AddDataValidator {
         .min(1)
         .max(80)
         .required()
+        .custom((value, helpers) => {
+          const trimmedValue = value.trim();
+          if (trimmedValue.length === 0) {
+            return helpers.error("string.empty");
+          }
+          return trimmedValue;
+        }, "string with only spaces validation")
         .messages({
           "string.empty": `${appConstant.TITLE} ${responseConstant.IS_EMPTY} ${responseConstant.PROVIDE_VALID_DATA}`,
           "string.min": `${appConstant.TITLE} ${responseConstant.SHOULD_HAVE} at least {#limit} characters.  ${responseConstant.PROVIDE_VALID_DATA}`,
@@ -28,6 +35,13 @@ class AddDataValidator {
       article: Joi.string()
         .min(20)
         .required()
+        .custom((value, helpers) => {
+          const trimmedValue = value.trim();
+          if (trimmedValue.length === 0) {
+            return helpers.error("string.empty");
+          }
+          return trimmedValue;
+        }, "string with only spaces validation")
         .messages({
           "string.empty": `${appConstant.ARTICLE} ${responseConstant.IS_EMPTY} ${responseConstant.PROVIDE_VALID_DATA}`,
           "string.min": `${appConstant.ARTICLE} ${responseConstant.SHOULD_HAVE} at least {#limit} characters. ${responseConstant.PROVIDE_VALID_DATA}`,

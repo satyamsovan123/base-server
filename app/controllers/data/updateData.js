@@ -6,6 +6,8 @@ const {
   uploadFilesToCloud,
   deleteFolderFromCloud,
   deleteFileFromCloud,
+  generateTagsFromData,
+  detectProfanity,
 } = require("../../services");
 
 const updateData = async (req, res) => {
@@ -86,6 +88,14 @@ const updateData = async (req, res) => {
     });
 
     userData.fileUrls = sanitizedFileUrls;
+
+    const hasProfanityInArticle = await detectProfanity(userData.article);
+    const hasProfanityInTitle = await detectProfanity(userData.title);
+    const hasProfanity = hasProfanityInArticle || hasProfanityInTitle;
+
+    userData.hasProfanity = hasProfanity;
+    const tags = await generateTagsFromData(userData.article);
+    userData.tags = tags;
 
     const updatedData = await Data.findOneAndUpdate(
       { _id: userData.id },
