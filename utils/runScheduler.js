@@ -1,28 +1,47 @@
-const { logger } = require("./logger");
+/**
+ * @fileoverview This file contains the function to run the scheduler
+ * @module utils/runScheduler
+ */
 const cron = require("node-cron");
+const { logger } = require("./logger");
+const { Data } = require("../app/models");
 const {
   sendCampaignEmail,
 } = require("../app/services/email/sendCampaignEmail");
-const { Data } = require("../app/models");
-const { appConfig } = require("../configs/appConfig");
 
-async function runScheduler() {
-  logger(`INFO`, `UTILS / RUNSCHEDULER - Inside run scheduler`);
-  // 0 30 08 * * * - At 08:30:00 AM every day
-  // */10 * * * * - Every 10 minutes
-  cron.schedule(appConfig.cronJobFrequency, async () => {
-    const allData = await Data.find({}).select("title article email");
-    const randomData = allData[Math.floor(Math.random() * allData.length)];
-
+/**
+ * This function runs the scheduler to send the campaign email
+ * @returns {void}
+ * @async
+ * @example
+ * runScheduler(); // Even though this function is async, it is not awaited because it is a scheduler and runs in the background
+ */
+const runScheduler = () => {
+  logger(`INFO`, `UTILS / RUN_SCHEDULER - Inside run scheduler`);
+  try {
+    if (!appConfig.useScheduler) {
+      logger(`INFO`, `UTILS / RUN_SCHEDULER - Scheduler is disabled`);
+      return;
+    }
+    // 0 30 08 * * * - At 08:30:00 AM every day
+    // */10 * * * * - Every 10 minutes
+    cron.schedule(appConfig.cronJobFrequency, async () => {
+      logger(
+        `INFO`,
+        `UTILS / RUN_SCHEDULER - Inside cron job that runs every day at 08:30:00 AM`
+      );
+      // Send the campaign email
+      // await sendCampaignEmail(
+      //   appConfig.testEmail,
+      //   `<h3>Hello, world!</h3> \n <article>Lorem ipsum</article>`
+      // );
+    });
+  } catch (error) {
     logger(
-      `INFO`,
-      `UTILS / RUNSCHEDULER - Inside cron job that runs every day at 08:30:00 AM`
+      `ERROR`,
+      `UTILS / RUN_SCHEDULER - Error while running scheduler \n Error - ${error}`
     );
-    // await sendCampaignEmail(
-    //   appConfig.testEmail,
-    //   `<h3>${randomData.title}</h3> \n <article>${randomData.article}</article>`
-    // );
-  });
-}
+  }
+};
 
 module.exports = { runScheduler };

@@ -12,6 +12,10 @@ uploads/
 app/uploads/*
 app/logs/*
 
+# Documentation folder
+docs/
+
+
 # .env file
 .env.prod
 .env.dev

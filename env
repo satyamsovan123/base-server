@@ -1,5 +1,4 @@
 # Don't forget to add the .env.prod or .env.dev file to your .gitignore file and change these values to your own
-
 BCRYPT_SALT_ROUNDS=5
 JWT_EXPIRES_IN=6h
 JWT_SECRET=jwtsecret
@@ -15,10 +14,12 @@ EMAIL_SERVER_API_KEY=123456ABCDEF
 EMAIL_SERVER_URL=https://email-web-server.herokuapp.com/api/
 REGISTERED_EMAIL=admin@baseserver.com
 TEST_EMAIL=someemail@email.com
+USE_SCHEDULER=true
 CRON_JOB_FREQUENCY=0 30 08 \* \* \*
 USE_RATE_LIMITER=true
 REQUESTS_PER_MINUTE=100
 
+CLOUD_STORAGE_NAME=Firebase
 FIREBASE_API_KEY=ABCDEFGHIJ
 FIREBASE_AUTH_DOMAIN=base-server.firebaseapp.com
 FIREBASE_PROJECT_ID=base-server

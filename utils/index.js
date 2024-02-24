@@ -1,3 +1,19 @@
+/**
+ * @fileoverview Index file for utils
+ * @module utils
+ * @requires utils/logger
+ * @requires utils/overengineedBoxifier
+ * @requires utils/authenticationHelper
+ * @requires utils/checkExistingDataInDatabase
+ * @requires utils/encryptionDecryption
+ * @requires utils/runScheduler
+ * @requires utils/redactSensitiveInformation
+ * @requires utils/startServer
+ * @requires utils/getAllEnvironmentVariables
+ * @requires utils/database
+ * @requires utils/responseBuilder
+ * @requires utils/getServerDetails
+ */
 const { logger } = require("./logger");
 const { overengineedBoxifier } = require("./overengineedBoxifier");
 const { generateJWT } = require("./authenticationHelper");
@@ -11,9 +27,10 @@ const {
   excryptPlainText,
 } = require("./encryptionDecryption");
 
-const { checkDBConnection } = require("./database");
 const { runScheduler } = require("./runScheduler");
 const { redactSensitiveInformation } = require("./redactSensitiveInformation");
+const { startServer } = require("./startServer");
+const { getAllEnvironmentVariables } = require("./getAllEnvironmentVariables");
 
 module.exports = {
   logger,
@@ -22,8 +39,9 @@ module.exports = {
   excryptPlainText,
   checkExistingData,
   checkExistingUser,
-  checkDBConnection,
   runScheduler,
   generateJWT,
   redactSensitiveInformation,
+  startServer,
+  getAllEnvironmentVariables,
 };
