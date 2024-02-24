@@ -15,7 +15,7 @@ global.appConfig = appConfig; // Making appConfig global so that it can be acces
 const { disconnectFromDB } = require("./utils/database");
 const { serverConstant } = require("./constants/serverConstant");
 const routes = require("./app/routes");
-const { logger, startServer } = require("./utils");
+const { logger, startServer, getAllEnvironmentVariables } = require("./utils");
 
 const app = express();
 

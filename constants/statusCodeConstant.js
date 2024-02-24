@@ -1,3 +1,12 @@
+/**
+ * @fileoverview This file contains constants used for status codes
+ * @module constants/statusCodeConstant
+ */
+
+/**
+ * This constant is used for status codes
+ * @constant {object}
+ */
 const statusCodeConstant = {
   SUCCESS: 200,
   ERROR: 500,

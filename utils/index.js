@@ -1,5 +1,5 @@
 /**
- * @fileoverview Index file for utils
+ * @fileoverview Index file to export all the utility functions
  * @module utils
  * @requires utils/logger
  * @requires utils/overengineedBoxifier
@@ -45,3 +45,5 @@ module.exports = {
   startServer,
   getAllEnvironmentVariables,
 };
+
+// TODO: Use class based approach for utils

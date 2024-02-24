@@ -2,7 +2,16 @@
  * @fileoverview This file contains the function to get all the environment variables
  * @module utils/getAllEnvironmentVariables
  */
+
+const dotenv = require("dotenv");
 require("dotenv").config();
+
+if (process.env.NODE_ENV === "production") {
+  dotenv.config({ path: ".env.prod" });
+} else {
+  dotenv.config({ path: ".env.dev" });
+}
+
 const { logger } = require("./logger");
 
 const requiredVariables = [
@@ -37,6 +46,8 @@ const requiredVariables = [
   { TEXTRAZOR_API_KEY: "textrazorAPIKey" },
   { PROFANITY_CHECKER_URL: "profanityCheckerURL" },
   { PROFANITY_CHECKER_API_KEY: "profanityCheckerAPIKey" },
+  { USE_CLOUD_STORAGE: "useCloudStorage" },
+  { USE_LOCAL_STORAGE: "useLocalStorage" },
 ];
 
 /**
@@ -65,3 +76,5 @@ const getAllEnvironmentVariables = () => {
 };
 
 module.exports = { getAllEnvironmentVariables };
+
+// TODO: Use this instead of appConfig.js

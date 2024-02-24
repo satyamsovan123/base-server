@@ -1,3 +1,12 @@
+/**
+ * @fileoverview This file contains constants used for server related messages
+ * @module constants/serverConstant
+ */
+
+/**
+ * This constant is used for server related messages
+ * @constant {object}
+ */
 const serverConstant = {
   SERVER_IS_RUNNING: "Server is running.",
   INTERNAL_SERVER_ERROR: "Internal server error.",

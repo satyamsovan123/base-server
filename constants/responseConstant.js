@@ -1,3 +1,12 @@
+/**
+ * @fileoverview This file contains constants used for response messages and error messages
+ * @module constants/responseConstant
+ */
+
+/**
+ * This constant is used for response messages and error messages
+ * @constant {object}
+ */
 const responseConstant = {
   SIGN_UP_SUCCESS: "Sign up successful.",
   SIGN_UP_ERROR: "Failed to sign up.",
